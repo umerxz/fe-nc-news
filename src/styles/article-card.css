@@ -1,0 +1,27 @@
+.card-grid{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    /* justify-items: center; */
+}
+
+.post-card{
+    background-color: slategray;
+    margin:10%;
+    padding: 5%;
+    box-shadow: 2px 2px 2px 5px rgb(207, 203, 203);
+}
+.post-card:hover{
+    transform: scale(1.2) rotate3d(0, 1, 0, 360deg);
+    transition: 1.5s;
+}
+@media screen and (max-width: 700px) {
+    .card-grid {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .card-grid {
+        grid-template-columns: 100%;
+    }
+}
