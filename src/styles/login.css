@@ -1,0 +1,30 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 10px grey;
+    padding: 20px;
+    margin: 10% 10%;
+}
+p{
+  text-align: justify;
+}
+p,ul{
+  font-size: 1.2em;
+  align-self: flex-start;
+}
+button{
+    align-self: center;
+    padding: 10px;
+    background-color: rgb(246, 188, 113);
+    box-shadow: 2px 2px 5px 2px grey;
+    border-radius: 5px;
+}
+button:hover{
+    transform: scale(1.1);
+    background-color: rgb(247, 174, 78);
+    transition: backgroud-color 1s ease, transform 1s ease;
+}
