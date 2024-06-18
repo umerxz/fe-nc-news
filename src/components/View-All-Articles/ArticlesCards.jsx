@@ -17,25 +17,32 @@ export const ArticlesCards = ({articlesList}) => {
                 return <Link to={`/articles/${article.article_id}`} key={article.article_id}>
                 <Card className='post-card' sx={{ maxWidth: 345 }}>
                     <CardHeader
+                        className='title-date'
                         avatar={
                         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            
+                            {article.author.slice(0,1).toUpperCase()}
                         </Avatar>
                         }
                         title={article.title}
                         subheader={ article.created_at}
+                        sx={{
+                        ".MuiCardHeader-subheader": {
+                            color: '#a2a3a2',
+                            fontSize:'0.7rem'
+                        }}}
                     />
                     <CardMedia
+                        className='img'
                         component="img"
                         height="194"
                         image={article.article_img_url}
-                        alt="Paella dish"
+                        alt={`This image is about ${article.title}`}
                     />
                     <CardContent>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography className='comments' variant="body2" color="text.secondary">
                         {article.comment_count} Comments
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography className='votes' variant="body2" color="text.secondary">
                         {article.votes} Votes
                         </Typography>
                     </CardContent>
