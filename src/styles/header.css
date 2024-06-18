@@ -1,0 +1,24 @@
+.header{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    background-image: linear-gradient( rgba(249, 159, 48, 0.3), rgba(20, 22, 26))
+}
+.header h1, .header details, .header .login {
+    margin: 0 10px 0 10px;
+}
+.header h1, .header details {
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+.header .login {
+    margin-left: auto; /* Push the login to the right */
+}
+
+details summary {
+    list-style: none; /* Remove default marker */
+    cursor: pointer; /* Indicate that it can be clicked */
+}

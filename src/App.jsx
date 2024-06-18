@@ -3,14 +3,19 @@ import {Routes,Route} from 'react-router-dom'
 import { UserProvider } from './context/UserProvider';
 import Login from './components/Login-Page/Login'
 import { AllArticles } from './components/View-All-Articles/AllArticles';
+import { ArticleId } from './components/View-ArticleI-By-d/ArticleId';
+import { Header } from './components/Header';
 
 function App() {
   return (
       <UserProvider>
         <Routes>
-          <Route exact path="/" element={<Login/>} />
-          
-          <Route exact path="/articles" element={<AllArticles/>} />
+          <Route path="/" element={<Header/>}>
+            <Route index element={<Login/>} />
+              {/* CREATE /HOME PAGE HERE WITH ARTICLES WITH MOST COMMENTS/VOTES */}
+            <Route path="/articles" element={<AllArticles/>} />
+            <Route path="/articles/:article_id" element={<ArticleId/>} />
+          </Route>
         </Routes>
       </UserProvider>
   )

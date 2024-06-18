@@ -7,7 +7,7 @@ const Login = () => {
     let {user} = useContext(UserContext)
     if (!user) {
         return <div>Loading...</div>;
-        }
+    }
     user = user.data.user
     return (
         <main className='login'>
