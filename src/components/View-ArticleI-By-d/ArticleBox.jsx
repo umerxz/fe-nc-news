@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart, faHeartCrack } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 import '../../styles/article-by-id.css'
+import { patchArticle } from "../../api/api";
 
 export const ArticleBox = ({article}) => {
-    // eslint-disable-next-line no-unused-vars
-    const [vote,setVote]=useState(article.votes)
+    const [vote,setVote]=useState(0)
 
     useEffect(() => {
+        setVote(article.votes)
     }, [article])
 
     if(!article){
@@ -17,7 +19,17 @@ export const ArticleBox = ({article}) => {
         )
     }
 
-   
+    const handleDownVote = (article_id) => {
+        setVote(vote-1)
+        patchArticle(article_id,-1)
+        .catch((err)=>setVote(vote+1))
+    }
+
+    const handleUpVote = (article_id) => {
+        setVote(vote+1)
+        patchArticle(article_id,1)
+        .catch((err)=>setVote(vote-1))
+    }    
     return (
         <>
             <div className="card">
@@ -30,13 +42,13 @@ export const ArticleBox = ({article}) => {
                 </div>
                 <footer className="card-footer">
                     <p className="card-footer-item">
-                        <span> <FontAwesomeIcon icon={faHeartCrack} beat style={{ color: '#ff2e2e' }} /> </span>
+                        <span> <FontAwesomeIcon onClick={()=>handleDownVote(article.article_id)} icon={faHeartCrack} beat style={{ color: '#ff2e2e' }} /> </span>
                     </p>
                     <p className="card-footer-item">
                         <span> {vote} </span>
                     </p>
                     <p className="card-footer-item">
-                        <span> <FontAwesomeIcon icon={faHeart} beat style={{ color: '#ff2e2e' }} /> </span>
+                        <span> <FontAwesomeIcon onClick={()=>handleUpVote(article.article_id)} icon={faHeart} beat style={{ color: '#ff2e2e' }} /> </span>
                     </p>
                 </footer>
             </div>
