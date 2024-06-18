@@ -9,13 +9,12 @@ import { Header } from './components/Header';
 function App() {
   return (
       <UserProvider>
+        <Header/>
         <Routes>
-          <Route path="/" element={<Header/>}>
             <Route index element={<Login/>} />
               {/* CREATE /HOME PAGE HERE WITH ARTICLES WITH MOST COMMENTS/VOTES */}
             <Route path="/articles" element={<AllArticles/>} />
             <Route path="/articles/:article_id" element={<ArticleId/>} />
-          </Route>
         </Routes>
       </UserProvider>
   )

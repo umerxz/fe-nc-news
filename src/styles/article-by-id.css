@@ -1,17 +1,23 @@
 .article-comments {
     margin: auto;
-    width: 70%;
+    width: 50%;
     height: auto;
     text-align: center;
     border-radius: 10px;
     box-shadow: 1px 1px 10px 1px;
 }
-.article-comments:hover {
-    transform: scaleY(1.03) scaleX(1.1);
-    transition: transform .4s ease;
-}
 img {
     width: 100%;
     border: 1px solid;
     border-color: azure;
+}
+.card{
+    width: 100%;
+}
+.card-content{
+    width: 100%;
+}
+.card img {
+    max-width: 70%; 
+    border-radius: 10px;
 }
