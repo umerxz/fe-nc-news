@@ -1,0 +1,33 @@
+
+.title{
+    text-align: left;
+}
+h3{
+    text-align: leftw;
+}
+.comments {
+    border: 1px snow;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgb(255, 255, 255);
+    padding: 15px;
+}
+.comment {
+    border-bottom: 1px solid #ccc;
+    padding: 0px;
+    text-align:justify;
+}
+/* .individual-comment-box {
+    height: 1rem;
+} */
+.individual-comment-box:hover {
+    background-color: rgb(228, 228, 228);
+    color: black;
+    border-color: rgb(255, 162, 0);
+}
+.view-hide-comments,a {
+    cursor: pointer;
+    color:#ccc
+}
+.remove-pointer{
+    cursor: default;
+}
