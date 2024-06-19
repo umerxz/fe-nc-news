@@ -8,9 +8,9 @@ export const Comments = ({articleComments}) => {
 
     return (
         <section className='comments'>
-            <h3>Comments</h3>
-            {articleComments.map((comment) => (
-                <Card className='individual-comment-box' key={comment.comment_id}
+            <h3 className='commentsText'>Comments</h3>
+            {articleComments.map((comment,index) => (
+                <Card className='individualCommentBox' key={comment.comment_id ? comment.comment_id : index}
                 variant="outlined"
                 sx={{  borderRadius: 4, '--Card-radius': 0 }}
                 >
@@ -18,7 +18,7 @@ export const Comments = ({articleComments}) => {
                         <Avatar src="https://via.placeholder.com/44" alt="Avatar image" />
                         <div style={{textAlign:'left', fontSize:'12px'}}>
                         <Typography style={{textAlign:'left', fontSize:'15px'}} variant="text" >{comment.author}</Typography>
-                        <Typography style={{textAlign:'left', fontSize:'10px'}} level="body-sm" >{comment.created_at}</Typography>
+                        <Typography style={{textAlign:'left', fontSize:'10px'}} level="body-sm" >At {new Date(comment.created_at).toLocaleTimeString()} on {new Date(comment.created_at).toLocaleDateString()}</Typography>
                         </div>
                     </CardContent>
                     <CardContent sx={{ gap: 0.5 }}>

@@ -40,3 +40,14 @@ export const patchArticle = (article_id, newVote) => {
         console.log(data)
     })
 }
+export const PostComment = (newComment,article_id,username) => {
+    console.log(newComment)
+    return ncNewsApi
+    .post(`/articles/${article_id}/comments`,{
+        username: username,
+        body: newComment
+    })
+    .then(({data})=>{
+        return data
+    })
+}

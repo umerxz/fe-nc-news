@@ -34,10 +34,11 @@ export const ArticleBox = ({article}) => {
         <>
             <div className="card">
                 <div className="card-content">
-                    <p className="title">
+                    <p className="articleTitle">
                     {article.title}
                     </p>
-                    <p className="subtitle">By: {article.author} at {article.created_at}</p>
+                    <p className="articleSubtitle">By: {article.author} </p>
+                    <p className="articleSubtitle">At {new Date(article.created_at).toLocaleTimeString()} on {new Date(article.created_at).toLocaleDateString()} </p>
                     {!article.article_img_url ? <h1>LOADING IMAGE...</h1> : <img style={{ borderRadius: '10px'}} src={article.article_img_url} alt={`This image text is about ${article.title}`} /> }
                 </div>
                 <footer className="card-footer">

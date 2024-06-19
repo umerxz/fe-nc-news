@@ -39,7 +39,7 @@ export const ArticlesCards = ({articlesList}) => {
                         alt={`This image is about ${article.title}`}
                     />
                     <CardContent>
-                        <Typography className='comments' variant="body2" color="text.secondary">
+                        <Typography className='coments' variant="body2" color="text.secondary">
                         {article.comment_count} Comments
                         </Typography>
                         <Typography className='votes' variant="body2" color="text.secondary">
