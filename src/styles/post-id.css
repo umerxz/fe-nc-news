@@ -39,3 +39,34 @@ h3{
 .remove-pointer{
     cursor: default;
 }
+.commentIcons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.editDelete, .likeDislike {
+    display: flex;
+    align-items: center;
+    padding: 0% 1%;
+    
+}
+.editDisallow,.trashDisallow,.editAllow,.trashAllow,.like,.dislike {
+    margin: 0 12%;
+}
+.trashAllow:hover{
+    color: red;
+    cursor: pointer;
+}
+.trashDisallow:hover{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.editAllow:hover{
+    color: rgb(103, 134, 248);
+}
+.editDisallow:hover{
+    cursor: not-allowed;
+    opacity: 0.5;
+}

@@ -6,7 +6,7 @@ import '../../styles/post-id.css'
 import { Comments } from './Comments';
 import { CommentAdder } from './CommentAdder';
 
-export const CommentsBox = ({articleComments,setArticleComments,article_id}) => {
+export const CommentsBox = ({articleComments,setArticleComments,article}) => {
     const [isViewAllComments,setIsViewAllComments]=useState(false)
     const [showCommentFrom,setShowCommentForm] = useState(false)
     
@@ -29,10 +29,14 @@ export const CommentsBox = ({articleComments,setArticleComments,article_id}) => 
                         <FontAwesomeIcon className='addCommentIcone' onClick={toggleCommentForm} icon={faSquarePlus} style={{ marginRight: '5px' }} />
                     </span>
                 </div>
-                {showCommentFrom ? <CommentAdder setArticleComments={setArticleComments} article_id={article_id} setIsViewAllComments={setIsViewAllComments}/> : null}
+                {showCommentFrom ? <CommentAdder setArticleComments={setArticleComments} article_id={article.article_id} setIsViewAllComments={setIsViewAllComments}/> : null}
                 {isViewAllComments 
                     && (
-                    <Comments className='remove-pointer' articleComments={articleComments} />
+                    <Comments className='remove-pointer' 
+                        articleComments={articleComments} 
+                        setArticleComments={setArticleComments} 
+                        article={article}
+                    />
                 )}
             </div>
         </>

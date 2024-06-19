@@ -37,11 +37,10 @@ export const patchArticle = (article_id, newVote) => {
         inc_votes: newVote
     })
     .then(({data})=>{
-        console.log(data)
+        return data
     })
 }
 export const PostComment = (newComment,article_id,username) => {
-    console.log(newComment)
     return ncNewsApi
     .post(`/articles/${article_id}/comments`,{
         username: username,
@@ -49,5 +48,12 @@ export const PostComment = (newComment,article_id,username) => {
     })
     .then(({data})=>{
         return data
+    })
+}
+export const deleteComment = (comment_id) => {
+    return ncNewsApi
+    .delete(`/comments/${comment_id}`)
+    .then((res)=>{
+        return res.data
     })
 }

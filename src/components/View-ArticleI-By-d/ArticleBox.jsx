@@ -20,15 +20,15 @@ export const ArticleBox = ({article}) => {
     }
 
     const handleDownVote = (article_id) => {
-        setVote(vote-1)
+        setVote(vote=>vote-1)
         patchArticle(article_id,-1)
-        .catch((err)=>setVote(vote+1))
+        .catch((err)=>setVote(vote=>vote+1))
     }
 
     const handleUpVote = (article_id) => {
-        setVote(vote+1)
+        setVote(vote=>vote+1)
         patchArticle(article_id,1)
-        .catch((err)=>setVote(vote-1))
+        .catch((err)=>setVote(vote=>vote-1))
     }    
     return (
         <>
