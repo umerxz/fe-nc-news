@@ -3,30 +3,38 @@
     text-align: left;
 }
 h3{
-    text-align: leftw;
+    text-align: left;
+    color: azure;
+    font-size: smaller;
+    text-decoration: underline;
 }
 .comments {
     border: 1px snow;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgb(255, 255, 255);
-    padding: 15px;
+    /* padding: 15px; */
 }
 .comment {
     border-bottom: 1px solid #ccc;
     padding: 0px;
     text-align:justify;
 }
-/* .individual-comment-box {
-    height: 1rem;
-} */
-.individual-comment-box:hover {
+.individualCommentBox {
+    margin: 1% 0;
+}
+.individualCommentBox:hover {
     background-color: rgb(228, 228, 228);
     color: black;
     border-color: rgb(255, 162, 0);
 }
-.view-hide-comments,a {
+.viewHideComments,a {
+    text-align: left;
+    font-size: 0.8rem;
     cursor: pointer;
     color:#ccc
+}
+.viewHideComments:hover{
+    color: white;
 }
 .remove-pointer{
     cursor: default;

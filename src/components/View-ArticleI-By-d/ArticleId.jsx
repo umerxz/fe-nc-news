@@ -7,7 +7,7 @@ import { CommentsBox } from './Commment-Box';
 
 export const ArticleId = () => {
     const [article, setArticle] = useState([]);
-    const [articleComments, aetArticleComments] = useState([]);
+    const [articleComments, setArticleComments] = useState([]);
     const {article_id} = useParams()
     useEffect(()=>{
         getArticleById(article_id)
@@ -16,13 +16,14 @@ export const ArticleId = () => {
         })
         getArticleComments(article_id)
         .then((comments)=>{
-            aetArticleComments(comments)
+            setArticleComments(comments)
         })
     },[article_id])
     return (
         <section className='article-comments'>
             <ArticleBox article={article}/>
-            <CommentsBox articleComments={articleComments} articleId={article_id}/>
+            <hr></hr>
+            <CommentsBox articleComments={articleComments} setArticleComments={setArticleComments} article_id={article_id}/>
         </section>
     )
 }
