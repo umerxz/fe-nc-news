@@ -23,7 +23,7 @@ export const ArticleId = () => {
         <section className='article-comments'>
             <ArticleBox article={article}/>
             <hr></hr>
-            <CommentsBox articleComments={articleComments} setArticleComments={setArticleComments} article_id={article_id}/>
+            <CommentsBox articleComments={articleComments} setArticleComments={setArticleComments} article={article}/>
         </section>
     )
 }
