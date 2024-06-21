@@ -7,20 +7,26 @@ import { CommentsBox } from './Commment-Box';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserProvider';
 import { Link } from "react-router-dom";
+import { LoadingSpinner } from '../LoadingSpinner';
 
 export const ArticleId = () => {
     const [article, setArticle] = useState([]);
     const [articleComments, setArticleComments] = useState([]);
+    const [loading,setLoading] = useState(false)
     const {article_id} = useParams()
     let {user} = useContext(UserContext)
 
     useEffect(()=>{
+        setLoading(true)
         getArticleById(article_id)
         .then(({article})=>{
             setArticle(article)
+            setLoading(false)
         })
+        setLoading(true)
         getArticleComments(article_id)
         .then((comments)=>{
+            setLoading(false)
             setArticleComments(comments)
         })
     },[article_id])
@@ -30,9 +36,17 @@ export const ArticleId = () => {
     }
     return (
         <section className='article-comments'>
-            <ArticleBox article={article}/>
-            <hr></hr>
-            <CommentsBox articleComments={articleComments} setArticleComments={setArticleComments} article={article}/>
+            {
+                loading
+                ?
+                <LoadingSpinner/>
+                :
+                <>
+                    <ArticleBox article={article}/>
+                    <hr></hr>
+                    <CommentsBox articleComments={articleComments} setArticleComments={setArticleComments} article={article}/>
+                </>
+            }
         </section>
     )
 }
