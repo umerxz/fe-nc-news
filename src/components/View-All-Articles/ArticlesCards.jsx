@@ -10,7 +10,6 @@ import '../../styles/article-card.css'
 import { Link } from 'react-router-dom';
 
 export const ArticlesCards = ({articlesList}) => {
-
     return(
         <div className="card-grid">
             {articlesList.map((article)=>{
@@ -24,7 +23,9 @@ export const ArticlesCards = ({articlesList}) => {
                         </Avatar>
                         }
                         title={article.title}
-                        subheader={ article.created_at}
+                        subheader={<>
+                            By {article.author} <br></br>On {new Date(article.created_at).toLocaleDateString()} <br></br>About {article.topic}
+                        </>}
                         sx={{
                         ".MuiCardHeader-subheader": {
                             color: '#a2a3a2',

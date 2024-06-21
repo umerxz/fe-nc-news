@@ -3,10 +3,10 @@ import { UserContext } from '../../context/UserProvider';
 import { Link } from 'react-router-dom';
 import '../../styles/login.css'
 
-const Login = () => {
+const About = () => {
     let {user} = useContext(UserContext)
     if (!user) {
-        return <div>Loading...</div>;
+        return <div>Loading..</div>;
     }
     user = user.data.user
     return (
@@ -30,4 +30,4 @@ const Login = () => {
     )
 
 }
-export default Login
+export default About

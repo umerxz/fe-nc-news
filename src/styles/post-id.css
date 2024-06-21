@@ -64,6 +64,7 @@ h3{
     opacity: 0.5;
 }
 .editAllow:hover{
+    cursor: pointer;
     color: rgb(103, 134, 248);
 }
 .editDisallow:hover{
