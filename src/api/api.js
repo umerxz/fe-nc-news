@@ -6,13 +6,32 @@ const ncNewsApi = axios.create({
 export const getUserByUsername = (username) => {
     return ncNewsApi
     .get(`/users/${username}`)
+    .then((asd)=>{
+        return asd
+    })
+    .catch((err)=>{
+        return Promise.reject(err.response)
+    })
+}
+export const postUser = (newUser) => {
+    return ncNewsApi
+    .post(`/users/`,newUser)
     .then(({data})=>{
         return data
     })
+    .catch((err)=>{
+        return Promise.reject(err.response)
+    })
 }
-export const getAllArticles = () => {
+export const getAllArticles = ({topic,sort_by,order}) => {
     return ncNewsApi
-    .get('/articles')
+    .get('/articles',{
+        params:{
+            topic: topic,
+            sort_by: sort_by,
+            order: order,
+        }
+    })
     .then(({data})=>{
         return data
     })
@@ -55,5 +74,12 @@ export const deleteComment = (comment_id) => {
     .delete(`/comments/${comment_id}`)
     .then((res)=>{
         return res.data
+    })
+}
+export const getTopics = () => {
+    return ncNewsApi
+    .get('/topics')
+    .then(({data})=>{
+        return data
     })
 }

@@ -1,0 +1,29 @@
+.formbox{
+    margin:10% auto;
+    text-align: center;
+    width: 30rem;
+    border: 1px solid rgb(116, 151, 250);
+    border-radius: 5px;
+}
+.formHeading{
+    font-size: 4rem;
+}
+.switchForm:hover {
+    cursor: pointer;
+    color: white;
+}
+.btns{
+    margin: 5%;
+    padding: 2% 5%;
+    background-color: chocolate;
+    color: rgb(16, 0, 138);
+    font-weight: 600;
+    border-radius: 5px;
+    border: 1px solid rgb(16, 0, 138);
+}
+.btns:hover{
+    background-color: rgb(42, 25, 168);
+    border: 1px solid chocolate;
+    color: chocolate;
+    box-shadow: 0px 0px 2px 1px chocolate;
+}

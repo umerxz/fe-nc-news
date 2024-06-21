@@ -10,12 +10,11 @@ import { deleteComment } from '../../api/api';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserProvider';
+import { useParams } from 'react-router-dom';
 
 export const Comments = ({articleComments,setArticleComments,article}) => {
     const [errorMsg,setErrorMsg] = useState('')
     let {user} = useContext(UserContext)
-    if(!user) return <h1>Loading...</h1>
-    user = user.data.user
 
     const handleDeleteComment = (comment) => {
         const commentId = comment.comment_id

@@ -25,8 +25,6 @@ export const CommentAdder = ({setArticleComments,article_id,setIsViewAllComments
     const [newComment,setNewComment] = React.useState('')
     const [errorMsg,setErrorMsg] = React.useState('')
     let {user} = useContext(UserContext)
-    if(!user) return <h1>Loading...</h1>
-    user = user.data.user
 
     const handleSubmit = async (event) => {
         event.preventDefault()
