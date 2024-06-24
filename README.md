@@ -31,7 +31,7 @@ Editing and voting comments will be developed soon, along with some more work on
 
 ## Local Setup Instructions
 
-To run this project locally, you'll need to have Node.js installed on your machine. The minimum required Node version is `v16.x`.
+To run this project locally, you'll need to have Node.js installed on your machine. The minimum required Node version is `v21.6.1`.
 
 ### Steps to Run Locally:
 
