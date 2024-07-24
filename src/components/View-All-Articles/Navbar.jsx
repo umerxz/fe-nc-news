@@ -62,7 +62,7 @@ export const Navbar = ({ setParams }) => {
                 <>
                     <h3>View All Articles</h3>
                     <div className="filter-section">
-                        <h4>Filter Articles By</h4>
+                        <h4>Filter By</h4>
                         {topics.map((topic) => (
                             <div key={topic.slug} className="filter-item">
                                 <input
@@ -76,7 +76,7 @@ export const Navbar = ({ setParams }) => {
                         ))}
                     </div>
                     <div className="sort-section">
-                        <h4>Sort Articles By</h4>
+                        <h4>Sort By</h4>
                         {sortBy.map((sort) => (
                             <div key={sort} className="sort-item">
                                 <input
@@ -92,7 +92,7 @@ export const Navbar = ({ setParams }) => {
                         ))}
                     </div>
                     <div className="order-section">
-                        <h4>Order Articles By</h4>
+                        <h4>Order By</h4>
                         {orderBy.map((order) => (
                             <div key={order} className="order-item">
                                 <input

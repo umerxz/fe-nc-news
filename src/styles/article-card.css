@@ -1,44 +1,37 @@
-/* article-card.css */
-
 .card-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-self: center;
-    /* max-width: 80% !important; */
-    margin: 5% 10%;
-    padding: 5px;
+    margin: 5% 0; 
 }
 
 .post-card {
     border-radius: 10px !important;
     box-shadow: 1px 1px 10px 1px !important;
-    background-color: #f9f9f9 !important; /* Very light color for cards */
-    color: #333 !important; /* Font color in contrast */
+    background-color: #f9f9f9 !important;
+    color: #333 !important; 
     height: 90%;
     margin: 5% 5%;
     padding: 2% 4%;
-    transition: transform 1s, box-shadow 1s;
 }
 
 .post-card:hover {
-    transform: scale(1.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
-
-.title-date, .votes, .coments {
-    color: #333 !important; /* Font color in contrast */
+.link{
+    text-decoration: none !important;
 }
-
+.title-date, .votes, .coments {
+    color: #333 !important; 
+}
 .img {
     width: 100% !important;
     border: 1px solid !important;
     border-color: #ddd !important;
     border-radius: 10px;
-}
-
-.votes, .coments {
-    padding: 5px;
 }
 
 @media screen and (max-width: 1150px) {
