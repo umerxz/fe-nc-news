@@ -1,33 +1,46 @@
-.card-grid{
+/* article-card.css */
+
+.card-grid {
     display: flex;
     flex-wrap: wrap;
-    grid-template-columns: auto auto auto;
     justify-content: center;
     align-self: center;
-    max-width: 100%;
+    /* max-width: 80% !important; */
     margin: 5% 10%;
     padding: 5px;
 }
-.post-card,.title-date,.votes,.coments{
-    color: white !important;
-}
-.img {
-    width: 100% !important;
-    border: 1px solid !important;
-    border-color: azure !important;
-}
-.post-card{
+
+.post-card {
     border-radius: 10px !important;
     box-shadow: 1px 1px 10px 1px !important;
-    background-color: #14161a !important;
+    background-color: #f9f9f9 !important; /* Very light color for cards */
+    color: #333 !important; /* Font color in contrast */
     height: 90%;
     margin: 5% 5%;
     padding: 2% 4%;
+    transition: transform 1s, box-shadow 1s;
 }
-.post-card:hover{
+
+.post-card:hover {
     transform: scale(1.2);
-    transition: 1s;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
+
+.title-date, .votes, .coments {
+    color: #333 !important; /* Font color in contrast */
+}
+
+.img {
+    width: 100% !important;
+    border: 1px solid !important;
+    border-color: #ddd !important;
+    border-radius: 10px;
+}
+
+.votes, .coments {
+    padding: 5px;
+}
+
 @media screen and (max-width: 1150px) {
     .card-grid {
         grid-template-columns: 50% 50%;
@@ -38,7 +51,4 @@
     .card-grid {
         grid-template-columns: 100%;
     }
-}
-.votes,.coments{
-    padding: 5px;
 }

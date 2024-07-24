@@ -1,29 +1,68 @@
-.formbox{
-    margin:10% auto;
+/* form.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .landing-page {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f1f1f1; /* Same background as login and signup */
+  }
+  
+  .content {
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
     text-align: center;
-    width: 30rem;
-    border: 1px solid rgb(116, 151, 250);
-    border-radius: 5px;
-}
-.formHeading{
-    font-size: 4rem;
-}
-.switchForm:hover {
-    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .info-text {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .btn {
+    background-color: #007bff;
     color: white;
-}
-.btns{
-    margin: 5%;
-    padding: 2% 5%;
-    background-color: chocolate;
-    color: rgb(16, 0, 138);
-    font-weight: 600;
+    border: none;
+    padding: 10px 20px;
     border-radius: 5px;
-    border: 1px solid rgb(16, 0, 138);
-}
-.btns:hover{
-    background-color: rgb(42, 25, 168);
-    border: 1px solid chocolate;
-    color: chocolate;
-    box-shadow: 0px 0px 2px 1px chocolate;
-}
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  

@@ -1,53 +1,74 @@
-.login{ 
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* border: 1px solid black;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px 10px grey; */
-    padding: 20px;
-    margin: auto 10%;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f1f1f1 !important;
+  padding: 20px;
 }
-.login h1 {
-  color: white;
+.login-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+.form-heading {
   font-size: 2rem;
-  /* margin: 5px auto; */
-  /* padding: 10px; */
-  padding-bottom: 0;
-  border-bottom: 1px solid rgb(253, 247, 236);
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
 }
-.login p{
-  text-align: justify;
+.account-created-msg {
+  color: #28a745;
+  font-size: 1rem;
+  margin-bottom: 20px;
 }
-.login p,ul{
+.form-label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #555;
+  font-family: 'Roboto', sans-serif;
+}
+.form-input {
+  width: 100%;
   padding: 10px;
-  margin: 10px auto;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+.error-msg {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.form-button {
+  background-color: #007bff;
   color: white;
-  font-size: 1.2em;
-  align-self: self-start;
-}
-.login li{
-  margin-left: 10px;
-}
-.login button {
-  color: rgb(251, 250, 248);
-  border-radius: 8px;
-  margin: 10% 10px;
-  border: 1px solid currentColor;
-  padding: 0.8em 1.4em 1em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #342f2f;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 3px 4px 10px 1px grey;
-  transition: border-color 0.25s;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s ease;
 }
-.login button:hover {
-  border-color: #646cff;
-  color: #1a1a1a;
-  transform: scale(1.1);
-  background-color: rgb(247, 174, 78);
-  transition: backgroud-color 1s ease, transform 1s ease;
+.form-button:hover {
+  background-color: #0056b3;
+}
+.switch-form-link {
+  color: #007bff;
+  text-decoration: none;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+.switch-form-link:hover {
+  text-decoration: underline;
 }

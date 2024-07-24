@@ -1,21 +1,55 @@
-import {  Link } from 'react-router-dom';
-import '../styles/header.css'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserProvider';
+import '../styles/header.css';
 
 export const Header = () => {
-    let {user} = useContext(UserContext)
-    let {logout} = useContext(UserContext)
+  const { user, logout } = useContext(UserContext);
 
-    return (
-        <>
-            <header className='header'>
-                <h1>NC NEWS</h1>
-                <details>
-                    <summary>{user ? user.username : <Link style={{fontSize:20}} to="/login">Login</Link>}</summary>
-                    <Link to='/login'>{user && <button onClick={logout}>Logout</button>}  </Link>
-                </details>
-            </header>
-        </>
-    )
-}
+  const toggleDropdown = () => {
+    document.getElementById("myDropdown").classList.toggle("show");
+  };
+
+  const closeDropdown = (event) => {
+    if (!event.target.closest('.user-menu')) {
+      document.getElementById("myDropdown").classList.remove("show");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', closeDropdown);
+    return () => {
+      document.removeEventListener('click', closeDropdown);
+    };
+  }, []);
+
+  return (
+    <header className="header">
+      <div className="header-container">
+        <Link to={user ? "/articles" : "/"} className="title-link">
+          <h1>NC NEWS</h1>
+        </Link>
+        <nav>
+          <Link className="nav-link" to="/about">About</Link>
+          {user ? (
+            <div className="user-menu">
+              <img
+                src={user.avatar_url}
+                alt={user.username}
+                className="user-avatar"
+                onClick={toggleDropdown}
+              />
+              <div id="myDropdown" className="dropdown-content">
+                <span className="dropdown-item username">{user.username}</span>
+                <div className="divider"></div>
+                <Link className="dropdown-item" onClick={logout} to='/login'>Logout</Link>
+              </div>
+            </div>
+          ) : (
+            <Link className="login-link" to="/login">Login</Link>
+          )}
+        </nav>
+      </div>
+    </header>
+  );
+};

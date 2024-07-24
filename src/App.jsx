@@ -17,8 +17,8 @@ function App() {
         <Header/>
         <Routes>
           <Route index element={<LandingPage/>} />
-          {/* <Route index element={<About/>} /> */}
             {/* CREATE /HOME PAGE HERE WITH ARTICLES WITH MOST COMMENTS/VOTES */}
+          <Route path="/about" element={<About/>} />
           <Route path="/login" element={<Login accountCreated={accountCreated}/>} />
           <Route path="/signup" element={<Signup setAccountCreated={setAccountCreated} />} />
           <Route path="/articles" element={<AllArticles/>} />

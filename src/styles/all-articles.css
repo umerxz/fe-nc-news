@@ -1,0 +1,25 @@
+/* all-articles.css */
+
+.all-articles-container {
+    display: flex;
+    margin-top: 70px; /* Space below the header */
+    background-color: white; /* Change to white background */
+    color: #333;
+    padding: 20px;
+  }
+  
+  .articles-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: white; /* Lighter background for the articles content */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+  }
+  
+  .page-description {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
