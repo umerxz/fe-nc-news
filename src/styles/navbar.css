@@ -1,57 +1,54 @@
 .navbar {
-    max-width: 400px;
-    min-width: 200px;
-    background-color: #f0f0f0 !important; 
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    color: #333;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    max-height: calc(100vh - 450px); 
-    overflow-y: auto; 
-  
-  }
-  
-  .navbar h3, .navbar h4 {
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .filter-section, .sort-section, .order-section {
-    margin-top: 30px;
-  }
-  
-  .filter-item, .sort-item, .order-item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .filter-item input, .sort-item input, .order-item input {
-    margin-right: 10px;
-  }
-  
-  .filter-item label, .sort-item label, .order-item label {
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .apply-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    align-self: center;
-    margin-top: 20px;
-  }
-  
-  .apply-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
+  min-width: 200px;
+  background-color: #f0f0f0 !important; 
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 5px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  max-height:550px;
+}
+
+.navbar h3, .navbar h4 {
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: bold;
+}
+
+.filter-section, .sort-section, .order-section {
+  margin-top: 30px;
+}
+
+.filter-item, .sort-item, .order-item {
+  display: flex;
+  align-items: center;
+}
+
+.filter-item input, .sort-item input, .order-item input {
+  margin-right: 10px;
+}
+
+.filter-item label, .sort-item label, .order-item label {
+  color: #333;
+  font-weight: bold;
+}
+
+.apply-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.apply-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
