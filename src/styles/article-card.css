@@ -3,50 +3,102 @@
     flex-wrap: wrap;
     justify-content: center;
     align-self: center;
-    margin: 5% 10%;
+    margin: 5% 0;
     padding: 5px;
 }
 
 .post-card {
-    border-radius: 10px !important;
-    box-shadow: 1px 1px 10px 1px !important;
-    background-color: #f9f9f9 !important;
-    color: #333 !important;
-    height: 90%;
-    margin: 5% 5%;
-    padding: 2% 4%;
+    border: 1px solid rgb(222, 221, 221);
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 3% 1.5%;
+    padding: 2%;
+    width: 350px;
+    height: auto;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .post-card:hover {
-    transition: transform 0.2s, box-shadow 0.2s;
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.title-date, .votes, .coments {
-    text-decoration: none;
-    color: #333 !important;
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.avatar {
+    background-color: #f44336;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.title-date {
+    flex-grow: 1;
+}
+
+.title {
+    font-size: 1.2rem !important;
+    font-weight: bold;
+    color: black !important;
+    margin: 0px 0px 5px !important;
+}
+
+.date {
+    color: #a2a3a2;
+    font-size: 0.7rem;
 }
 
 .img {
-    width: 100% !important;
-    border: 1px solid !important;
-    border-color: #ddd !important;
+    width: 100%;
+    height: 100px; 
+    object-fit: cover;
+    border: 1px solid #ddd;
     border-radius: 10px;
 }
 
-.votes, .coments {
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.votes, .comments {
     padding: 5px;
 }
 
 @media screen and (max-width: 1150px) {
     .card-grid {
-        grid-template-columns: 50% 50%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .post-card {
+        width: 80%;
     }
 }
 
 @media screen and (max-width: 770px) {
     .card-grid {
-        grid-template-columns: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .post-card {
+        width: 100%;
     }
 }

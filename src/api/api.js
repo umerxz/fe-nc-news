@@ -24,7 +24,6 @@ export const postUser = (newUser) => {
     })
 }
 export const getAllArticles = ({topic,sort_by,order}) => {
-    console.log(typeof topic,' +++ ',sort_by,' +++ ',order)
     return ncNewsApi
     .get('/articles',{
         params:{
