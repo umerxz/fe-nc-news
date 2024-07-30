@@ -24,6 +24,7 @@ export const postUser = (newUser) => {
     })
 }
 export const getAllArticles = ({topic,sort_by,order}) => {
+    console.log(typeof topic,' +++ ',sort_by,' +++ ',order)
     return ncNewsApi
     .get('/articles',{
         params:{
@@ -81,5 +82,25 @@ export const getTopics = () => {
     .get('/topics')
     .then(({data})=>{
         return data
+    })
+}
+export const createTopic = (newTopic) => {
+    return ncNewsApi
+    .post(`/topics`,newTopic)
+    .then(({data})=>{
+        return data
+    })
+    .catch((err)=>{
+        return Promise.reject(err.response)
+    })
+}
+export const createArticle = (newArticle) => {
+    return ncNewsApi
+    .post(`/articles`,newArticle)
+    .then(({data})=>{
+        return data
+    })
+    .catch((err)=>{
+        return Promise.reject(err.response)
     })
 }

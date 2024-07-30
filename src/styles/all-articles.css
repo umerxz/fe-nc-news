@@ -1,25 +1,192 @@
 /* all-articles.css */
 
 .all-articles-container {
-    display: flex;
-    margin-top: 70px; /* Space below the header */
-    background-color: white; /* Change to white background */
-    color: #333;
-    padding: 20px;
-  }
-  
-  .articles-content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: white; /* Lighter background for the articles content */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 20px;
-  }
-  
-  .page-description {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #555;
-  }
-  
+  display: flex;
+  margin-top: 70px; /* Space below the header */
+  background-color: white; /* Change to white background */
+  color: #333;
+  padding: 20px;
+}
+
+.articles-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: white; /* Lighter background for the articles content */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  margin-left: 20px;
+}
+
+.page-description {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.header-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.left-text, .right-text {
+  width: 45%;
+  font-size: 1.2rem;
+  align-self: baseline;
+}
+
+.separator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex-grow: 1;
+  width: 1px;
+  background-color: #333;
+}
+
+.separator span {
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.separator .line {
+  height: 25px;
+  border-left: 1.25px solid #333;
+}
+
+.create-article-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.create-article-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the overlay is on top of everything */
+}
+
+.ReactModal__Content {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  border-radius: 10px;
+  outline: none;
+  padding: 20px;
+  width: 400px;
+  max-width: 80%;
+  max-height: 90vh;
+  z-index: 1001; /* Ensure the modal content is above the overlay */
+}
+
+.ReactModal__Content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.ReactModal__Content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.ReactModal__Content label {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+
+.ReactModal__Content input,
+.ReactModal__Content textarea,
+.ReactModal__Content select {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 0.9rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.ReactModal__Content input:focus,
+.ReactModal__Content textarea:focus,
+.ReactModal__Content select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.ReactModal__Content button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  align-self: center;
+  margin-top: 10px;
+}
+
+.ReactModal__Content button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Error message styling */
+.error-msg {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-top: 0px !important;
+  position: relative;
+  animation: shake 0.3s ease;
+}
+
+.error-msg::before {
+  content: '⚠';
+  margin-right: 5px;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}

@@ -16,6 +16,14 @@ export const Navbar = ({ setParams }) => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        const savedTopics = JSON.parse(localStorage.getItem('selectedTopic')) || [];
+        const savedSort = localStorage.getItem('selectedSort') || 'created_at';
+        const savedOrder = localStorage.getItem('selectedOrder') || 'desc';
+
+        setSelectedTopic(savedTopics);
+        setSelectedSort(savedSort);
+        setSelectedOrder(savedOrder);
+
         getTopics()
         .then(({ topics }) => {
             setTopics(topics);
@@ -23,11 +31,15 @@ export const Navbar = ({ setParams }) => {
         .catch((err) => {
             setErrorMsg(err.msg);
         });
-    }, []);
+    }, [topics]);
 
     const handleApply = () => {
-        const topic = selectedTopic.length ? selectedTopic.join(',') : '';
-        setParams({ topic: topic, order: selectedOrder, sort_by: selectedSort });
+        localStorage.setItem('selectedTopic', JSON.stringify(selectedTopic));
+        localStorage.setItem('selectedSort', selectedSort);
+        localStorage.setItem('selectedOrder', selectedOrder);
+
+        const topic = selectedTopic.length ? selectedTopic.join('&') : '';
+        setParams({ topic: selectedTopic, order: selectedOrder, sort_by: selectedSort });
         searchParams.set('sort_by', selectedSort);
         searchParams.set('order', selectedOrder);
         setSearchParams(searchParams);
@@ -62,7 +74,7 @@ export const Navbar = ({ setParams }) => {
                 <>
                     <h3>View All Articles</h3>
                     <div className="filter-section">
-                        <h4>Filter Articles By</h4>
+                        <h4>Filter By</h4>
                         {topics.map((topic) => (
                             <div key={topic.slug} className="filter-item">
                                 <input
@@ -70,13 +82,14 @@ export const Navbar = ({ setParams }) => {
                                     value={topic.slug}
                                     onChange={handleTopicChange}
                                     id={`filter-${topic.slug}`}
+                                    checked={selectedTopic.includes(topic.slug)}
                                 />
                                 <label htmlFor={`filter-${topic.slug}`}>{topic.slug[0].toUpperCase()+topic.slug.slice(1,topic.slug.length)}</label>
                             </div>
                         ))}
                     </div>
                     <div className="sort-section">
-                        <h4>Sort Articles By</h4>
+                        <h4>Sort By</h4>
                         {sortBy.map((sort) => (
                             <div key={sort} className="sort-item">
                                 <input
@@ -92,7 +105,7 @@ export const Navbar = ({ setParams }) => {
                         ))}
                     </div>
                     <div className="order-section">
-                        <h4>Order Articles By</h4>
+                        <h4>Order By</h4>
                         {orderBy.map((order) => (
                             <div key={order} className="order-item">
                                 <input

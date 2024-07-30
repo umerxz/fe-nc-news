@@ -13,7 +13,7 @@ export const ArticlesCards = ({articlesList}) => {
     return(
         <div className="card-grid">
             {articlesList.map((article)=>{
-                return <Link to={`/articles/${article.article_id}`} key={article.article_id}>
+                return <Link to={`/articles/${article.article_id}`} key={article.article_id} style={{textDecoration:'none'}}>
                 <Card className='post-card' sx={{ maxWidth: 345 }}>
                     <CardHeader
                         className='title-date'
