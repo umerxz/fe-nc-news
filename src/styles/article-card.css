@@ -1,11 +1,8 @@
-/* article-card.css */
-
 .card-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-self: center;
-    /* max-width: 80% !important; */
     margin: 5% 10%;
     padding: 5px;
 }
@@ -13,8 +10,8 @@
 .post-card {
     border-radius: 10px !important;
     box-shadow: 1px 1px 10px 1px !important;
-    background-color: #f9f9f9 !important; /* Very light color for cards */
-    color: #333 !important; /* Font color in contrast */
+    background-color: #f9f9f9 !important;
+    color: #333 !important;
     height: 90%;
     margin: 5% 5%;
     padding: 2% 4%;
@@ -28,7 +25,7 @@
 
 .title-date, .votes, .coments {
     text-decoration: none;
-    color: #333 !important; /* Font color in contrast */
+    color: #333 !important;
 }
 
 .img {

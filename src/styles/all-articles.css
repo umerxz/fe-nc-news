@@ -1,9 +1,7 @@
-/* all-articles.css */
-
 .all-articles-container {
   display: flex;
-  margin-top: 70px; /* Space below the header */
-  background-color: white; /* Change to white background */
+  margin-top: 70px; 
+  background-color: white; 
   color: #333;
   padding: 20px;
 }
@@ -11,7 +9,7 @@
 .articles-content {
   flex-grow: 1;
   padding: 20px;
-  background-color: white; /* Lighter background for the articles content */
+  background-color: white; 
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
@@ -89,7 +87,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure the overlay is on top of everything */
+  z-index: 1000;
 }
 
 .ReactModal__Content {
@@ -107,7 +105,7 @@
   width: 400px;
   max-width: 80%;
   max-height: 90vh;
-  z-index: 1001; /* Ensure the modal content is above the overlay */
+  z-index: 1001; 
 }
 
 .ReactModal__Content h2 {
@@ -165,7 +163,6 @@
   transform: scale(1.05);
 }
 
-/* Error message styling */
 .error-msg {
   background-color: #f8d7da;
   color: #721c24;
