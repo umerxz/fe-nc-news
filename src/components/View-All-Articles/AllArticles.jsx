@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState, useContext } from "react";
 import { getAllArticles, getTopics, createArticle, createTopic } from "../../api/api";
 import { ArticlesCards } from "./ArticlesCards";
 import { Navbar } from "./Navbar";
 import { UserContext } from '../../context/UserProvider';
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { LoadingSpinner } from "../LoadingSpinner";
 import Modal from 'react-modal';
+import Pagination from "./Pagination";
+import ArticlesPerPage from "./ArticlesPerPage";
 import '../../styles/all-articles.css';
 
 Modal.setAppElement('#root');
@@ -19,12 +22,49 @@ export const AllArticles = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [topics, setTopics] = useState([]);
     const [newArticle, setNewArticle] = useState({ title: '', body: '', topic: '', newTopic: '', description: '', article_img_url: '' });
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [page, setPage] = useState(parseInt(searchParams.get('page') || 1));
+    const [limit, setLimit] = useState(parseInt(searchParams.get('limit') || 10));
+    const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
+        const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || {
+            topic: [],
+            sort_by: 'created_at',
+            order: 'desc',
+            limit: 10,
+            page: 1
+        };
+        setParams(savedParams);
+        setLimit(savedParams.limit || 10);  // Ensure the limit state is correctly set
+        setPage(savedParams.page || 1);     // Ensure the page state is correctly set
+        fetchArticles(savedParams);
+        fetchTopics();
+    }, []);
+
+    useEffect(() => {
+        const newParams = { ...params, limit, page };
+        setParams(newParams);
+        setSearchParams(newParams); // Update URL with limit and page
+        fetchArticles(newParams);
+    }, [limit, page]);
+
+    const fetchTopics = () => {
+        return getTopics()
+        .then(({ topics }) => {
+            setTopics(topics);
+        })
+        .catch((err) => {
+            setErrorMsg({ msg: err.msg });
+        });
+    }
+
+    const fetchArticles = (params) => {
         setLoading(true);
         getAllArticles(params)
-        .then(({ articles }) => {
+        .then(({ articles, total_count }) => {
             setArticlesList(articles);
+            setTotalCount(total_count);
             setErrorMsg(null);
             setLoading(false);
         })
@@ -32,15 +72,7 @@ export const AllArticles = () => {
             setLoading(false);
             setErrorMsg({ msg: err.msg });
         });
-
-        getTopics()
-        .then(({ topics }) => {
-            setTopics(topics);
-        })
-        .catch((err) => {
-            setErrorMsg({ msg: err.msg });
-        });
-    }, [params]);
+    };
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -61,8 +93,7 @@ export const AllArticles = () => {
         event.preventDefault();
         setErrorMsg(null);
 
-        const urlRegex = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1[1?\d{1,2}|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
-        if (newArticle.article_img_url!=='' && !urlRegex.test(newArticle.article_img_url)) {
+        const urlRegex = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1[1?\d{1,2}|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;        if (newArticle.article_img_url !== '' && !urlRegex.test(newArticle.article_img_url)) {
             setErrorMsg({ for: 'image', status: null, msg: 'Invalid Image URL' });
             return;
         }
@@ -70,6 +101,7 @@ export const AllArticles = () => {
         if (newArticle.topic === 'new') {
             try {
                 await createTopic({ slug: newArticle.newTopic, description: newArticle.description });
+                await fetchTopics(); // Update topics after creating a new one
             } catch (error) {
                 setErrorMsg({ for: 'topic', status: error.status, msg: error.data.msg });
                 return;
@@ -87,15 +119,15 @@ export const AllArticles = () => {
         createArticle(articleData)
         .then(() => {
             setModalIsOpen(false);
-            getAllArticles(params)
-            .then(({ articles }) => {
-                setArticlesList(articles);
-            });
+            fetchArticles(params);
         })
         .catch((error) => {
             setErrorMsg({ for: 'article', status: error.status, msg: error.data.msg });
         });
     };
+
+    const startArticle = (page - 1) * limit + 1;
+    const endArticle = Math.min(page * limit, totalCount);
 
     if (!user) {
         return <h1 style={{ fontSize: '2rem' }}>Please <Link to='/login' style={{ fontSize: '2rem', textDecoration: 'underline' }}>Login</Link> to gain access to NC News</h1>;
@@ -103,7 +135,12 @@ export const AllArticles = () => {
 
     return (
         <div className="all-articles-container">
-            <Navbar setParams={setParams} topics={topics} />
+            <Navbar 
+                setParams={(newParams) => { setParams(newParams); setPage(1); setLimit(10); fetchArticles({ ...newParams, limit: 10, page: 1 }); }} 
+                topics={topics}
+                limit={limit}
+                page={page}
+            />
             <div className="articles-content">
                 <div className="header-section">
                     <div className="left-text">
@@ -119,11 +156,25 @@ export const AllArticles = () => {
                         <button onClick={openModal} className="create-article-button">Create New Article</button>
                     </div>
                 </div>
-                {
-                    loading
-                    ? <LoadingSpinner />
-                    : <ArticlesCards articlesList={articlesList} />
-                }
+                {loading ? <LoadingSpinner /> : (
+                    <>  
+                        <div className="articles-per-page-container">
+                            <ArticlesPerPage
+                                limit={limit}
+                                setLimit={setLimit}
+                                totalCount={totalCount}
+                            />
+                            <span>Showing articles {startArticle} - {endArticle} of {totalCount} total articles</span>
+                        </div>
+                        <ArticlesCards articlesList={articlesList} />
+                        <Pagination
+                            limit={limit}
+                            totalCount={totalCount}
+                            page={page}
+                            setPage={setPage}
+                        />
+                    </>
+                )}
             </div>
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="ReactModal__Content" overlayClassName="ReactModal__Overlay">
                 <h2>Create New Article</h2>
@@ -131,13 +182,13 @@ export const AllArticles = () => {
                     <label>
                         Title:
                         <input type="text" name="title" value={newArticle.title} onChange={handleInputChange} required />
-                        {errorMsg && errorMsg.for === 'article' && errorMsg.status==='title' && <p className="error-msg">{errorMsg.msg}</p>}
+                        {errorMsg && errorMsg.for === 'article' && errorMsg.status === 'title' && <p className="error-msg">{errorMsg.msg}</p>}
                     </label>
                     <label>
                         Body:
                         <textarea name="body" value={newArticle.body} onChange={handleInputChange} required />
-                        {errorMsg && errorMsg.for === 'article' && errorMsg.status==='body' && <p className="error-msg">{errorMsg.msg}</p>}
-                        </label>
+                        {errorMsg && errorMsg.for === 'article' && errorMsg.status === 'body' && <p className="error-msg">{errorMsg.msg}</p>}
+                    </label>
                     <label>
                         Topic:
                         <select name="topic" value={newArticle.topic} onChange={handleInputChange} required >
@@ -152,7 +203,7 @@ export const AllArticles = () => {
                         <>
                             <label>
                                 New Topic:
-                                <input type="text" name="newTopic" value={newArticle.newTopic} onChange={handleInputChange}  />
+                                <input type="text" name="newTopic" value={newArticle.newTopic} onChange={handleInputChange} />
                                 {errorMsg && errorMsg.for === 'topic' && errorMsg.status === 403 && newArticle.newTopic !== '' && <p className="error-msg">{errorMsg.msg}</p>}
                                 {errorMsg && errorMsg.for === 'topic' && errorMsg.status === 400 && newArticle.newTopic === '' && <p className="error-msg">{errorMsg.msg}</p>}
                             </label>
@@ -161,7 +212,7 @@ export const AllArticles = () => {
                                 <textarea name="description" value={newArticle.description} onChange={handleInputChange} />
                             </label>
                         </>
-                    ) : newArticle.newTopic=''}
+                    ) : newArticle.newTopic = ''}
                     <label>
                         Image URL:
                         <input type="text" name="article_img_url" value={newArticle.article_img_url} onChange={handleInputChange} />
@@ -173,3 +224,8 @@ export const AllArticles = () => {
         </div>
     );
 };
+
+
+
+
+// const urlRegex = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1[1?\d{1,2}|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;

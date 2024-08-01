@@ -23,13 +23,16 @@ export const postUser = (newUser) => {
         return Promise.reject(err.response)
     })
 }
-export const getAllArticles = ({topic,sort_by,order}) => {
+export const getAllArticles = ({topic,sort_by,order,limit,page}) => {
+    console.log(topic,sort_by,order,limit,page)
     return ncNewsApi
     .get('/articles',{
         params:{
             topic: topic,
             sort_by: sort_by,
             order: order,
+            limit: limit,
+            p: page,
         }
     })
     .then(({data})=>{

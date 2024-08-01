@@ -1,0 +1,35 @@
+.articles-per-page-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #333;
+    margin-left: 0px;
+}
+
+#articles-per-page {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: border-color 0.3s ease;
+}
+
+#articles-per-page:hover {
+    border-color: #007bff;
+}
+
+.articles-per-page-container div {
+    align-self:unsafe;
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+.articles-per-page-container span {
+    align-self:unsafe;
+    margin-left: auto;
+    margin-right: 5%;
+}
