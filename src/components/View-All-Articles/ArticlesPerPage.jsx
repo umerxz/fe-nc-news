@@ -1,17 +1,27 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import '../../styles/articles-per-page.css';
 
-const ArticlesPerPage = ({ limit, setLimit, totalCount }) => {
-    const options = [];
-    for (let i = 5; i <= totalCount; i += 5) {
-        options.push(i);
-    }
-    if (totalCount % 5 !== 0) {
-        options.push(totalCount);
-    }
+const ArticlesPerPage = ({ limit, setLimit, totalCount, setSearchParams }) => {
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        const opts = [];
+        for (let i = 5; i <= totalCount; i += 5) {
+            opts.push(i);
+        }
+        opts.push(totalCount % 5 === 0 ? totalCount : totalCount + (5 - (totalCount % 5)));
+        setOptions(opts);
+    }, [totalCount]);
 
     const handleLimitChange = (event) => {
-        setLimit(parseInt(event.target.value, 10));
+        const newLimit = parseInt(event.target.value, 10);
+        setLimit(newLimit);
+        setSearchParams((prevParams) => {
+            prevParams.set('limit', newLimit);
+            prevParams.set('page', 1);
+            return prevParams;
+        });
     };
 
     return (

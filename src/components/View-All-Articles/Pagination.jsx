@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import '../../styles/pagination.css';
 
-const Pagination = ({ page, setPage, totalCount, limit }) => {
+const Pagination = ({ page, setPage, totalCount, limit, setSearchParams }) => {
     const totalPages = Math.ceil(totalCount / limit);
 
     const getPageNumbers = () => {
@@ -33,17 +33,29 @@ const Pagination = ({ page, setPage, totalCount, limit }) => {
     const handlePageClick = (pageNumber) => {
         if (pageNumber === '...') return;
         setPage(pageNumber);
+        setSearchParams((prevParams) => {
+            prevParams.set('page', pageNumber);
+            return prevParams;
+        });
     };
 
     const handleNextPageClick = () => {
         if (page < totalPages) {
             setPage(page + 1);
+            setSearchParams((prevParams) => {
+                prevParams.set('page', page + 1);
+                return prevParams;
+            });
         }
     };
 
     const handlePreviousPageClick = () => {
         if (page > 1) {
             setPage(page - 1);
+            setSearchParams((prevParams) => {
+                prevParams.set('page', page - 1);
+                return prevParams;
+            });
         }
     };
 
@@ -62,7 +74,7 @@ const Pagination = ({ page, setPage, totalCount, limit }) => {
                     {pageNumber}
                 </button>
             ))}
-            <button onClick={handleNextPageClick} disabled={page >= totalPages}>
+            <button onClick={handleNextPageClick} disabled={page === totalPages}>
                 Next
             </button>
         </div>

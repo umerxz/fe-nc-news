@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -9,14 +10,16 @@ export const Navbar = ({ setParams, topics, limit, page }) => {
     const [selectedTopic, setSelectedTopic] = React.useState([]);
     const [selectedSort, setSelectedSort] = React.useState('created_at');
     const [selectedOrder, setSelectedOrder] = React.useState('desc');
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
     React.useEffect(() => {
         const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || {
             topic: [],
             sort_by: 'created_at',
-            order: 'desc'
+            order: 'desc',
+            limit: 10,
+            page: 1
         };
         setSelectedTopic(savedParams.topic);
         setSelectedSort(savedParams.sort_by);
@@ -28,22 +31,13 @@ export const Navbar = ({ setParams, topics, limit, page }) => {
             topic: selectedTopic,
             sort_by: selectedSort,
             order: selectedOrder,
-            limit: limit,
-            page: 1  // Reset page to 1 on apply
+            limit,
+            page: 1
         };
         localStorage.setItem('appliedParams', JSON.stringify(appliedParams));
 
-        const topic = selectedTopic.length ? selectedTopic.join('&') : '';
         setParams(appliedParams);
-        searchParams.set('sort_by', selectedSort);
-        searchParams.set('order', selectedOrder);
-        searchParams.set('limit', limit);
-        searchParams.set('page', 1);
-        setSearchParams(searchParams);
-        let urlQuery = '';
-        if (topic) urlQuery += `/topics/${topic}?${searchParams.toString()}`;
-        else urlQuery += `/articles?${searchParams.toString()}`;
-        navigate(urlQuery);
+        navigate(`?topic=${selectedTopic.join('&')}&sort_by=${selectedSort}&order=${selectedOrder}&limit=${limit}&page=1`);
     };
 
     const handleTopicChange = (event) => {

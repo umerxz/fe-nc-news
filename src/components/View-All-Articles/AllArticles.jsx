@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState, useContext } from "react";
 import { getAllArticles, getTopics, createArticle, createTopic } from "../../api/api";
 import { ArticlesCards } from "./ArticlesCards";
@@ -16,7 +15,6 @@ Modal.setAppElement('#root');
 export const AllArticles = () => {
     const [articlesList, setArticlesList] = useState([]);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [params, setParams] = useState({});
     const [loading, setLoading] = useState(false);
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -28,50 +26,45 @@ export const AllArticles = () => {
     const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
-        const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || {
-            topic: [],
-            sort_by: 'created_at',
-            order: 'desc',
-            limit: 10,
-            page: 1
-        };
-        setParams(savedParams);
-        setLimit(savedParams.limit || 10);  // Ensure the limit state is correctly set
-        setPage(savedParams.page || 1);     // Ensure the page state is correctly set
-        fetchArticles(savedParams);
         fetchTopics();
     }, []);
 
     useEffect(() => {
-        const newParams = { ...params, limit, page };
-        setParams(newParams);
-        setSearchParams(newParams); // Update URL with limit and page
-        fetchArticles(newParams);
-    }, [limit, page]);
+        const params = {
+            topic: searchParams.get('topic') || '',
+            sort_by: searchParams.get('sort_by') || 'created_at',
+            order: searchParams.get('order') || 'desc',
+            limit: parseInt(searchParams.get('limit') || 10),
+            page: parseInt(searchParams.get('page') || 1)
+        };
+        setLimit(params.limit);
+        setPage(params.page);
+        fetchArticles(params);
+    }, [searchParams]);
 
     const fetchTopics = () => {
         return getTopics()
-        .then(({ topics }) => {
-            setTopics(topics);
-        })
-        .catch((err) => {
-            setErrorMsg({ msg: err.msg });
-        });
-    }
+            .then(({ topics }) => {
+                setTopics(topics);
+            })
+            .catch((err) => {
+                setErrorMsg({ msg: err.msg });
+            });
+    };
 
     const fetchArticles = (params) => {
         setLoading(true);
         getAllArticles(params)
-        .then(({ articles, total_count }) => {
-            setArticlesList(articles);
-            setTotalCount(total_count);
-            setErrorMsg(null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            setLoading(false);
-            setErrorMsg({ msg: err.msg });
-        });
+            .then(({ articles, total_count }) => {
+                setArticlesList(articles);
+                setTotalCount(total_count);
+                setErrorMsg(null);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+                setErrorMsg({ msg: err.msg });
+            });
     };
 
     const openModal = () => {
@@ -93,7 +86,8 @@ export const AllArticles = () => {
         event.preventDefault();
         setErrorMsg(null);
 
-        const urlRegex = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1[1?\d{1,2}|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;        if (newArticle.article_img_url !== '' && !urlRegex.test(newArticle.article_img_url)) {
+        const urlRegex = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1[1?\d{1,2}|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+        if (newArticle.article_img_url !== '' && !urlRegex.test(newArticle.article_img_url)) {
             setErrorMsg({ for: 'image', status: null, msg: 'Invalid Image URL' });
             return;
         }
@@ -117,13 +111,13 @@ export const AllArticles = () => {
         };
 
         createArticle(articleData)
-        .then(() => {
-            setModalIsOpen(false);
-            fetchArticles(params);
-        })
-        .catch((error) => {
-            setErrorMsg({ for: 'article', status: error.status, msg: error.data.msg });
-        });
+            .then(() => {
+                setModalIsOpen(false);
+                fetchArticles(params);
+            })
+            .catch((error) => {
+                setErrorMsg({ for: 'article', status: error.status, msg: error.data.msg });
+            });
     };
 
     const startArticle = (page - 1) * limit + 1;
@@ -135,8 +129,8 @@ export const AllArticles = () => {
 
     return (
         <div className="all-articles-container">
-            <Navbar 
-                setParams={(newParams) => { setParams(newParams); setPage(1); setLimit(10); fetchArticles({ ...newParams, limit: 10, page: 1 }); }} 
+            <Navbar
+                setParams={setSearchParams}
                 topics={topics}
                 limit={limit}
                 page={page}
@@ -157,12 +151,13 @@ export const AllArticles = () => {
                     </div>
                 </div>
                 {loading ? <LoadingSpinner /> : (
-                    <>  
+                    <>
                         <div className="articles-per-page-container">
                             <ArticlesPerPage
                                 limit={limit}
                                 setLimit={setLimit}
                                 totalCount={totalCount}
+                                setSearchParams={setSearchParams}
                             />
                             <span>Showing articles {startArticle} - {endArticle} of {totalCount} total articles</span>
                         </div>
@@ -172,6 +167,7 @@ export const AllArticles = () => {
                             totalCount={totalCount}
                             page={page}
                             setPage={setPage}
+                            setSearchParams={setSearchParams}
                         />
                     </>
                 )}
@@ -224,8 +220,3 @@ export const AllArticles = () => {
         </div>
     );
 };
-
-
-
-
-// const urlRegex = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1[1?\d{1,2}|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;

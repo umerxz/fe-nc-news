@@ -6,8 +6,8 @@ const ncNewsApi = axios.create({
 export const getUserByUsername = (username) => {
     return ncNewsApi
     .get(`/users/${username}`)
-    .then((asd)=>{
-        return asd
+    .then((user)=>{
+        return user
     })
     .catch((err)=>{
         return Promise.reject(err.response)
@@ -105,4 +105,21 @@ export const createArticle = (newArticle) => {
     .catch((err)=>{
         return Promise.reject(err.response)
     })
+}
+export const patchUser = (updatedUser) => {
+        console.log(updatedUser)
+        return ncNewsApi
+    .patch(`/users/${updatedUser.username}`,updatedUser)
+    .then(({data})=>{
+        console.log(data)
+        return data
+    })
+    .catch((err)=>{
+        console.log(err)
+        return Promise.reject(err.response)
+    })
+}
+
+export const deleteUser = () => {
+    console.log('DELETE UNDER DEVELOPMENT')
 }

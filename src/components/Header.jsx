@@ -40,7 +40,7 @@ export const Header = () => {
                 onClick={toggleDropdown}
               />
               <div id="myDropdown" className="dropdown-content">
-                <span className="dropdown-item username">{user.username}</span>
+                <Link className="dropdown-item username" to={`/profile/${user.username}`}>{user.username}</Link>
                 <div className="divider"></div>
                 <Link className="dropdown-item" onClick={logout} to='/login'>Logout</Link>
               </div>
