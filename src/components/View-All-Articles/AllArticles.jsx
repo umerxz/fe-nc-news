@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState, useContext } from "react";
 import { getAllArticles, getTopics, createArticle, createTopic } from "../../api/api";
 import { ArticlesCards } from "./ArticlesCards";
@@ -24,23 +25,26 @@ export const AllArticles = () => {
     const [page, setPage] = useState(parseInt(searchParams.get('page') || 1));
     const [limit, setLimit] = useState(parseInt(searchParams.get('limit') || 10));
     const [totalCount, setTotalCount] = useState(0);
+    const [params, setParams] = useState({});
 
     useEffect(() => {
+        const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || {
+            topic: [],
+            sort_by: 'created_at',
+            order: 'desc',
+            limit: 10,
+            page: 1
+        };
+        setParams(savedParams);
+        fetchArticles(savedParams);
         fetchTopics();
     }, []);
 
     useEffect(() => {
-        const params = {
-            topic: searchParams.get('topic') || '',
-            sort_by: searchParams.get('sort_by') || 'created_at',
-            order: searchParams.get('order') || 'desc',
-            limit: parseInt(searchParams.get('limit') || 10),
-            page: parseInt(searchParams.get('page') || 1)
-        };
-        setLimit(params.limit);
-        setPage(params.page);
-        fetchArticles(params);
-    }, [searchParams]);
+        const newParams = { ...params, limit, page };
+        setParams(newParams);
+        fetchArticles(newParams);
+    }, [limit, page]);
 
     const fetchTopics = () => {
         return getTopics()
@@ -129,11 +133,14 @@ export const AllArticles = () => {
 
     return (
         <div className="all-articles-container">
-            <Navbar
-                setParams={setSearchParams}
-                topics={topics}
-                limit={limit}
-                page={page}
+            <Navbar 
+                setParams={(newParams) => { 
+                    setParams({ ...newParams, limit: 10, page: 1 });
+                    fetchArticles({ ...newParams, limit: 10, page: 1 });
+                    setPage(1);
+                    setLimit(10);
+                }} 
+                topics={topics} 
             />
             <div className="articles-content">
                 <div className="header-section">
@@ -151,13 +158,16 @@ export const AllArticles = () => {
                     </div>
                 </div>
                 {loading ? <LoadingSpinner /> : (
-                    <>
+                    <>  
                         <div className="articles-per-page-container">
                             <ArticlesPerPage
                                 limit={limit}
-                                setLimit={setLimit}
+                                setLimit={(newLimit) => {
+                                    setLimit(newLimit);
+                                    setPage(1);
+                                    fetchArticles({ ...params, limit: newLimit, page: 1 });
+                                }}
                                 totalCount={totalCount}
-                                setSearchParams={setSearchParams}
                             />
                             <span>Showing articles {startArticle} - {endArticle} of {totalCount} total articles</span>
                         </div>
@@ -166,8 +176,10 @@ export const AllArticles = () => {
                             limit={limit}
                             totalCount={totalCount}
                             page={page}
-                            setPage={setPage}
-                            setSearchParams={setSearchParams}
+                            setPage={(newPage) => {
+                                setPage(newPage);
+                                fetchArticles({ ...params, page: newPage });
+                            }}
                         />
                     </>
                 )}

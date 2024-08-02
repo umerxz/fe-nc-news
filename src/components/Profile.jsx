@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import Modal from 'react-modal';
 import { UserContext } from '../context/UserProvider';
 import { getUserByUsername, patchUser, deleteUser } from '../api/api';
 import '../styles/profile.css';
 import { LoadingSpinner } from './LoadingSpinner';
+
+Modal.setAppElement('#root');
 
 export const Profile = () => {
     const { user: currentUser, updateUser, logout } = useContext(UserContext);
@@ -13,6 +16,7 @@ export const Profile = () => {
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ name: '', avatar_url: '' });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (username) {
@@ -61,8 +65,16 @@ export const Profile = () => {
             navigate('/');
         })
         .catch((err) => {
-            setError({ msg: err.response.data.msg, status: err.response.status });
+            setError(err.data.msg);
         });
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -112,12 +124,43 @@ export const Profile = () => {
                             <h2 className="profile-name">{userDetails.name}</h2>
                             <div className="profile-buttons">
                                 <button onClick={() => setIsEditing(true)} className="edit-button">Edit Profile</button>
-                                <button onClick={handleDeleteAccount} className="delete-button">Delete Account</button>
+                                <button onClick={openModal} className="delete-button">Delete Account</button>
                             </div>
                         </>
                     )}
+                    <Link to="/articles" className="back-button">Go Back to Home</Link>
                 </div>
             )}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Confirm Account Deletion"
+                className="modal"
+                overlayClassName="overlay"
+            >
+                <h2>Confirm Account Deletion</h2>
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                <div className="modal-buttons">
+                    <button 
+                        onClick={handleDeleteAccount} 
+                        className="cancel-button" 
+                        style={{backgroundColor:'#ff4d4d'}}
+                        onMouseEnter={(e) => e.target.style.backgroundColor = '#cc0000'}
+                        onMouseLeave={(e) => e.target.style.backgroundColor = '#ff4d4d'}
+                    >
+                        Delete
+                    </button>
+                    <button 
+                        onClick={closeModal} 
+                        className="cancel-button" 
+                        style={{backgroundColor:'#6c757d'}}
+                        onMouseEnter={(e) => e.target.style.backgroundColor = '#4d5458'}
+                        onMouseLeave={(e) => e.target.style.backgroundColor = '#6c757d'}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </Modal>
         </div>
     );
 };

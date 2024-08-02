@@ -1,3 +1,5 @@
+/* profile.css */
+
 .profile-container {
     display: flex;
     justify-content: center;
@@ -7,6 +9,7 @@
     font-family: 'Arial', sans-serif;
     flex-direction: column;
     text-align: center;
+    position: relative;
 }
 
 .profile-card {
@@ -51,40 +54,20 @@
     color: #777;
 }
 
-.error-msg {
-    font-size: 2.2rem;
+.error-msg, .loading-msg {
+    font-size: 1.2rem;
     color: red;
     margin-bottom: 20px;
-    box-shadow: 5px 5px 5px 5px rgb(162, 102, 102);
-    animation: shake 0.3s ease;
 }
+
 .error-msg-url {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: red;
-    background-color: #ffe0e0;
     margin-bottom: 20px;
-    box-shadow: inset 0px 0px 5px 1px rgb(162, 102, 102);
-    animation: shakeX 0.3s ease;
-    border-radius: 5px;
 }
-.error-msg-url::before {
-    content: '⚠';
-    margin-right: 5px;
-  }
-  
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-  }
-@keyframes shake {
-    0% { transform: translateY(30px); }
-    25% { transform: translateY(-30px); }
-    50% { transform: translateY(20px); }
-    75% { transform: translateY(-20px); }
-    100% { transform: translateY(10px); }
+
+.loading-msg {
+    color: #333;
 }
 
 .edit-button, .delete-button, .save-button, .cancel-button, .back-button {
@@ -135,7 +118,20 @@
 }
 
 .cancel-button:hover {
-    background-color: #5a6268;
+    background-color: #4d5458;
+    transform: scale(1.05);
+}
+
+.back-button {
+    margin-top: 20px;
+    background-color: #17a2b8;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.back-button:hover {
+    background-color: #138496;
     transform: scale(1.05);
 }
 
@@ -145,17 +141,4 @@
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
-}
-.back-button {
-    background-color: #6c757d;
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-}
-
-.back-button:hover {
-    background-color: #5a6268;
-    color: white;
-    transform: scale(1.05);
 }

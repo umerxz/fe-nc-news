@@ -25,7 +25,7 @@ const Signup = ({ setAccountCreated }) => {
         } else {
         setUsernameErrorMsg('');
         setAvatarErrorMsg('');
-        postUser({ username, name, avatarUrl })
+        postUser({ username, name, avatar_url:avatarUrl })
             .then(() => {
             setLoading(false);
             setAccountCreated(true);

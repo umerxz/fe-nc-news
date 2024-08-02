@@ -107,19 +107,20 @@ export const createArticle = (newArticle) => {
     })
 }
 export const patchUser = (updatedUser) => {
-        console.log(updatedUser)
-        return ncNewsApi
+    return ncNewsApi
     .patch(`/users/${updatedUser.username}`,updatedUser)
     .then(({data})=>{
-        console.log(data)
         return data
     })
     .catch((err)=>{
-        console.log(err)
         return Promise.reject(err.response)
     })
 }
 
-export const deleteUser = () => {
-    console.log('DELETE UNDER DEVELOPMENT')
+export const deleteUser = (username) => {
+    return ncNewsApi
+    .delete(`/users/${username}`)
+    .then((res)=>{
+        console.log(res)
+    })
 }
