@@ -10,6 +10,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import { useState } from 'react';
 import { Profile } from './components/Profile';
+import { MyArticles } from './components/MyArticles';
 
 function App() {
     const [accountCreated,setAccountCreated] = useState(false)
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signup" element={<Signup setAccountCreated={setAccountCreated} />} />
           <Route path="/profile/:username" element={<Profile/>} />
           <Route path="/articles" element={<AllArticles/>} />
+          <Route path="/my-articles" element={<MyArticles />} />
           <Route path="/topics/:topic" element={<AllArticles/>} />
           <Route path="/articles/:article_id" element={<ArticleId/>} />
         </Routes>

@@ -1,0 +1,59 @@
+.my-articles-container {
+    padding: 40px;
+    text-align: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    margin-top: 20px;
+}
+
+.my-articles-container h2 {
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.my-articles-container h2::after {
+    content: '';
+    width: 20%;
+    height: 4px;
+    background: #1e90ff;
+    display: block;
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+.no-articles {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.no-articles:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.no-articles p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-msg {
+    font-size: 1.5rem;
+    color: red;
+    text-align: center;
+}

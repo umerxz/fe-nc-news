@@ -23,11 +23,12 @@ export const postUser = (newUser) => {
         return Promise.reject(err.response)
     })
 }
-export const getAllArticles = ({topic,sort_by,order,limit,page}) => {
-    console.log(topic,sort_by,order,limit,page)
+export const getAllArticles = ({author,topic,sort_by,order,limit,page}) => {
+    console.log(author,topic,sort_by,order,limit,page)
     return ncNewsApi
     .get('/articles',{
         params:{
+            author:author,
             topic: topic,
             sort_by: sort_by,
             order: order,
@@ -37,6 +38,10 @@ export const getAllArticles = ({topic,sort_by,order,limit,page}) => {
     })
     .then(({data})=>{
         return data
+    })
+    .catch((err)=>{
+        console.log(err.response.data.msg)
+        return Promise.reject(err.response)
     })
 }
 export const getArticleById = (articleId) => {
@@ -120,7 +125,7 @@ export const patchUser = (updatedUser) => {
 export const deleteUser = (username) => {
     return ncNewsApi
     .delete(`/users/${username}`)
-    .then((res)=>{
-        console.log(res)
+    .then(()=>{
+        return;
     })
 }

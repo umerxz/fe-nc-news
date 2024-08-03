@@ -82,7 +82,7 @@ export const Profile = () => {
             {error && error.status === 404 ? 
             <>
                 <p className="error-msg">{error.msg}</p> 
-                <Link style={{textDecoration:'none'}} to="/articles" className="back-button">Go Back to Home</Link>
+                <Link style={{textDecoration:'none', color:'#fff',}} to="/articles" className="back-button">Go Back to Home</Link>
             </>
             :
             !userDetails ? (
@@ -128,7 +128,6 @@ export const Profile = () => {
                             </div>
                         </>
                     )}
-                    <Link to="/articles" className="back-button">Go Back to Home</Link>
                 </div>
             )}
             <Modal

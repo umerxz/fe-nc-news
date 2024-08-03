@@ -13,7 +13,6 @@
 }
 
 .profile-card {
-    margin-top: 10%;
     background: white;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -141,4 +140,33 @@
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: white;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 80%;
+    padding: 20px;
+    text-align: center;
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
