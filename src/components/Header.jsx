@@ -4,7 +4,7 @@ import { UserContext } from '../context/UserProvider';
 import Logo from '../Logo/NC-NEWS.png';
 import '../styles/header.css';
 
-export const Header = () => {
+export const Header = ({ onLogoClick }) => {
   const { user, logout } = useContext(UserContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -42,10 +42,10 @@ export const Header = () => {
     <header className="header">
       <div className="header-container">
         <div className="left-section">
-          <Link to={user ? "/articles" : "/"} className="title-link">
+          <Link to={user ? "/articles?topic=&sort_by=created_at&order=desc&limit=10&page=1" : "/"} className="title-link" onClick={onLogoClick}>
             <img src={Logo} alt="NC NEWS" className="logo" />
           </Link>
-          <Link style={{textDecoration:'none', color:'#fff'}} className="nav-link" to="/about">About</Link>
+          <Link style={{ textDecoration: 'none', color: '#fff' }} className="nav-link" to="/about">About</Link>
         </div>
         <div className="right-section">
           {user ? (

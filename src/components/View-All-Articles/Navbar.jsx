@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import '../../styles/navbar.css';
 
-export const Navbar = ({ setParams, topics, limit, page }) => {
+export const Navbar = ({ setParams, topics, limit, page, resetFilters, setResetFilters, setLimit, setPage, setSearchParams }) => {
     const sortBy = ["created_at", "votes", "comment_count"];
     const orderBy = ["desc", "asc"];
     const [selectedTopic, setSelectedTopic] = React.useState([]);
@@ -12,6 +12,16 @@ export const Navbar = ({ setParams, topics, limit, page }) => {
     const [selectedOrder, setSelectedOrder] = React.useState('desc');
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (resetFilters) {
+            setSelectedTopic([]);
+            setSelectedSort('created_at');
+            setSelectedOrder('desc');
+            setResetFilters(false);
+        }
+    }, [resetFilters]);
+    
 
     React.useEffect(() => {
         const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || {
@@ -37,7 +47,8 @@ export const Navbar = ({ setParams, topics, limit, page }) => {
         localStorage.setItem('appliedParams', JSON.stringify(appliedParams));
 
         setParams(appliedParams);
-        navigate(`?topic=${selectedTopic.join('&')}&sort_by=${selectedSort}&order=${selectedOrder}&limit=${limit}&page=1`);
+        setPage(1);
+        navigate(`?topic=${selectedTopic.join(',')}&sort_by=${selectedSort}&order=${selectedOrder}&limit=${limit}&page=1`);
     };
 
     const handleTopicChange = (event) => {
@@ -74,7 +85,7 @@ export const Navbar = ({ setParams, topics, limit, page }) => {
                                 id={`filter-${topic.slug}`}
                                 checked={selectedTopic.includes(topic.slug)}
                             />
-                            <label htmlFor={`filter-${topic.slug}`}>{topic.slug[0].toUpperCase() + topic.slug.slice(1, topic.slug.length)}</label>
+                            <label htmlFor={`filter-${topic.slug}`}>{topic.slug[0].toUpperCase() + topic.slug.slice(1)}</label>
                         </div>
                     ))}
                 </div>
@@ -90,7 +101,7 @@ export const Navbar = ({ setParams, topics, limit, page }) => {
                                 onChange={handleSortChange}
                                 id={`sort-${sort}`}
                             />
-                            <label htmlFor={`sort-${sort}`}>{sort === 'created_at' ? 'Created At' : sort === 'votes' ? 'Votes' : sort === 'comment_count' ? 'Comments' : null}</label>
+                            <label htmlFor={`sort-${sort}`}>{sort === 'created_at' ? 'Created At' : sort === 'votes' ? 'Votes' : 'Comments'}</label>
                         </div>
                     ))}
                 </div>

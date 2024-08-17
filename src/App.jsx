@@ -10,7 +10,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import { useState } from 'react';
 import { Profile } from './components/Profile';
-import { MyArticles } from './components/MyArticles';
+import { MyArticles } from './components/View-All-Articles/MyArticles';
 
 function App() {
     const [accountCreated,setAccountCreated] = useState(false)
