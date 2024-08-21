@@ -41,7 +41,7 @@ export const ArticleBox = ({ article }) => {
                     <CardMedia
                         component="img"
                         alt={`Image for ${article.title}`}
-                        height="250"
+                        // height="250"
                         image={article.article_img_url}
                         className="articleImage"
                     />

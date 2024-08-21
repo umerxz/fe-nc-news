@@ -64,6 +64,20 @@ export const getArticleComments = (articleId) => {
         return Promise.reject(err.response)
     })
 }
+export const updateComment = (commentId, {newVote,body}) => {
+    console.log(commentId,newVote,body)
+    return ncNewsApi
+    .patch(`/comments/${commentId}`,{
+        inc_votes: newVote,
+        body: body,
+    })
+    .then(({data})=>{
+        return data
+    })
+    .catch((err)=>{
+        return Promise.reject(err.response)
+    })
+}
 export const patchArticle = (article_id, newVote) => {
     return ncNewsApi
     .patch(`/articles/${article_id}`,{

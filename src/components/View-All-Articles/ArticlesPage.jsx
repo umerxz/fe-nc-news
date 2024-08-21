@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { UserContext } from '../../context/UserProvider';
@@ -19,7 +20,7 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
     const navigate = useNavigate();
     const [articlesList, setArticlesList] = useState([]);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [loading, setLoading] = useState(true); // Start with loading true
+    const [loading, setLoading] = useState(true); 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [topics, setTopics] = useState([]);
     const [newArticle, setNewArticle] = useState({ title: '', body: '', topic: '', newTopic: '', description: '', article_img_url: '' });
@@ -57,7 +58,7 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
             })
             .catch((err) => {
                 setErrorMsg({ status: err.status, msg: err.data.msg });
-                setLoading(false); // Stop loading on error
+                setLoading(false);
             });
     };
 
@@ -65,7 +66,7 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
         if (author) {
             params.author = author;
         }
-        setLoading(true); // Set loading true before API call
+        setLoading(true); 
         getAllArticles(params)
             .then(({ articles, total_count }) => {
                 if (articles.length === 0) {
@@ -75,16 +76,16 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
                 } else {
                     setArticlesList(articles);
                     setTotalCount(total_count);
-                    setErrorMsg(null); // Clear any previous error
+                    setErrorMsg(null); 
                 }
             })
             .catch((err) => {
-                setArticlesList([]); // Clear the articles if there's an error
+                setArticlesList([]); 
                 setTotalCount(0);
                 setErrorMsg({ status: err.status, msg: err.data.msg });
             })
             .finally(() => {
-                setLoading(false); // Stop loading regardless of the result
+                setLoading(false);
             });
     };
 

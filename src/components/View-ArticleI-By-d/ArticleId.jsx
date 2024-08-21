@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { LoadingSpinner } from '../LoadingSpinner';
 
 export const ArticleId = () => {
-    const [article, setArticle] = useState([]);
+    const [article, setArticle] = useState(null);
     const [articleComments, setArticleComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const { article_id } = useParams();
@@ -24,20 +24,20 @@ export const ArticleId = () => {
                 setArticle(article);
                 setLoading(false);
             })
-            .catch((err)=>{
-                setErrorMsg({msg:err.data.msg,status:err.status})
+            .catch((err) => {
+                setErrorMsg({ msg: err.response.data.msg, status: err.response.status });
                 setLoading(false);
-            })
+            });
         setLoading(true);
         getArticleComments(article_id)
             .then((comments) => {
                 setLoading(false);
                 setArticleComments(comments);
             })
-            .catch((err)=>{
-                setErrorMsg({msg:err.data.msg,status:err.status})
+            .catch((err) => {
+                setErrorMsg({ msg: err.response.data.msg, status: err.response.status });
                 setLoading(false);
-            })
+            });
     }, [article_id]);
 
     if (!user) {
@@ -54,9 +54,10 @@ export const ArticleId = () => {
         );
     }
 
-    if (loading) {
+    if (loading || !article) {
         return <LoadingSpinner />;
     }
+
     return (
         <>
             <div className="descriptive-text-container">
