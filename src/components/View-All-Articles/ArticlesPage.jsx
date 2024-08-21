@@ -19,7 +19,7 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
     const navigate = useNavigate();
     const [articlesList, setArticlesList] = useState([]);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); // Start with loading true
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [topics, setTopics] = useState([]);
     const [newArticle, setNewArticle] = useState({ title: '', body: '', topic: '', newTopic: '', description: '', article_img_url: '' });
@@ -28,25 +28,26 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
     const [limit, setLimit] = useState(parseInt(searchParams.get('limit') || 10));
     const [totalCount, setTotalCount] = useState(0);
     const [params, setParams] = useState({
-        topic: '',
-        sort_by: 'created_at',
-        order: 'desc',
-        limit: 10,
-        page: 1
+        topic: searchParams.get('topic') || '',
+        sort_by: searchParams.get('sort_by') || 'created_at',
+        order: searchParams.get('order') || 'desc',
+        limit: parseInt(searchParams.get('limit')) || 10,
+        page: parseInt(searchParams.get('page')) || 1
     });
     const [resetFilters, setResetFilters] = useState(false);
 
     useEffect(() => {
         const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || params;
         setParams(savedParams);
-        fetchArticles(savedParams);
-        fetchTopics();
+        fetchTopics().then(() => fetchArticles(savedParams));
     }, []);
 
     useEffect(() => {
         const newParams = { ...params, limit, page };
         setParams(newParams);
-        fetchArticles(newParams);
+        if (!errorMsg) {
+            fetchArticles(newParams);
+        }
     }, [limit, page]);
 
     const fetchTopics = () => {
@@ -55,7 +56,8 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
                 setTopics(topics);
             })
             .catch((err) => {
-                setErrorMsg({ status: err.status, msg: err.msg });
+                setErrorMsg({ status: err.status, msg: err.data.msg });
+                setLoading(false); // Stop loading on error
             });
     };
 
@@ -63,21 +65,26 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
         if (author) {
             params.author = author;
         }
-        setLoading(true);
-        setErrorMsg(null);  // Clear previous errors before making the API call
+        setLoading(true); // Set loading true before API call
         getAllArticles(params)
             .then(({ articles, total_count }) => {
-                setArticlesList(articles);
-                setTotalCount(total_count);
-                setErrorMsg(null); // Clear errors only on successful data fetch
-                setLoading(false);
-                setResetFilters(false); // Ensure filters reset properly
+                if (articles.length === 0) {
+                    setErrorMsg({ status: 404, msg: 'No articles found for the selected topic.' });
+                    setArticlesList([]);
+                    setTotalCount(0);
+                } else {
+                    setArticlesList(articles);
+                    setTotalCount(total_count);
+                    setErrorMsg(null); // Clear any previous error
+                }
             })
             .catch((err) => {
-                setLoading(false);
-                console.log('==================');
-                console.log(err);
-                setErrorMsg({ status: err.status, msg: err.data.msg }); // Set error message
+                setArticlesList([]); // Clear the articles if there's an error
+                setTotalCount(0);
+                setErrorMsg({ status: err.status, msg: err.data.msg });
+            })
+            .finally(() => {
+                setLoading(false); // Stop loading regardless of the result
             });
     };
 
@@ -169,32 +176,26 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
                 </div>
             ) : (
                 <>
-                    {totalCount > 0 && (
-                        <Navbar 
-                            setParams={(newParams) => { 
-                                setParams({ ...newParams, limit, page: 1 });
-                                fetchArticles({ ...newParams, limit, page: 1 });
-                                setPage(1);
-                                setLimit(limit);
-                            }} 
-                            topics={topics} 
-                            resetFilters={resetFilters}
-                            setResetFilters={setResetFilters}
-                            limit={limit}
-                            page={page}
-                            setLimit={setLimit}
-                            setPage={setPage}
-                            setSearchParams={setSearchParams}
-                        />
-                    )}
-                    <div className="articles-content">
-                        {totalCount === 0 ? (
-                            <div className="no-articles">
-                                <p>{customMessage}</p>
-                                <button onClick={openModal} className="create-article-button">Create New Article</button>
-                            </div>
-                        ) : (
-                            <>
+                    {loading && <LoadingSpinner />}
+                    {!loading && totalCount > 0 && (
+                        <>
+                            <Navbar 
+                                setParams={(newParams) => { 
+                                    setParams({ ...newParams, limit, page: 1 });
+                                    fetchArticles({ ...newParams, limit, page: 1 });
+                                    setPage(1);
+                                    setLimit(limit);
+                                }} 
+                                topics={topics} 
+                                resetFilters={resetFilters}
+                                setResetFilters={setResetFilters}
+                                limit={limit}
+                                page={page}
+                                setLimit={setLimit}
+                                setPage={setPage}
+                                setSearchParams={setSearchParams}
+                            />
+                            <div className="articles-content">
                                 <div className="header-section">
                                     <div className="left-text">
                                         <p>{customTitle}</p>
@@ -209,32 +210,34 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
                                         <button onClick={openModal} className="create-article-button">Create New Article</button>
                                     </div>
                                 </div>
-                                {loading ? <LoadingSpinner /> : (
-                                    <>
-                                        <div className="articles-per-page-container">
-                                            <ArticlesPerPage
-                                                limit={limit}
-                                                setLimit={setLimit}
-                                                totalCount={totalCount}
-                                                setSearchParams={setSearchParams}
-                                            />
-                                            <span>Showing articles {startArticle} - {endArticle} of {totalCount} total articles</span>
-                                        </div>
-                                        <ArticlesCards articlesList={articlesList} />
-                                        <Pagination
-                                            limit={limit}
-                                            totalCount={totalCount}
-                                            page={page}
-                                            setPage={(newPage) => {
-                                                setPage(newPage);
-                                                fetchArticles({ ...params, page: newPage });
-                                            }}
-                                        />
-                                    </>
-                                )}
-                            </>
-                        )}
-                    </div>
+                                <div className="articles-per-page-container">
+                                    <ArticlesPerPage
+                                        limit={limit}
+                                        setLimit={setLimit}
+                                        totalCount={totalCount}
+                                        setSearchParams={setSearchParams}
+                                    />
+                                    <span>Showing articles {startArticle} - {endArticle} of {totalCount} total articles</span>
+                                </div>
+                                <ArticlesCards articlesList={articlesList} />
+                                <Pagination
+                                    limit={limit}
+                                    totalCount={totalCount}
+                                    page={page}
+                                    setPage={(newPage) => {
+                                        setPage(newPage);
+                                        fetchArticles({ ...params, page: newPage });
+                                    }}
+                                />
+                            </div>
+                        </>
+                    )}
+                    {!loading && totalCount === 0 && (
+                        <div className="no-articles">
+                            <p>{customMessage}</p>
+                            <button onClick={openModal} className="create-article-button">Create New Article</button>
+                        </div>
+                    )}
                 </>
             )}
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="ReactModal__Content" overlayClassName="ReactModal__Overlay">
@@ -285,7 +288,3 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
         </div>
     );
 };
-
-
-
-// setErrorMsg({ status: err.status, msg: err.data.msg });

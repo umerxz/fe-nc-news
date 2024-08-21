@@ -24,7 +24,6 @@ export const postUser = (newUser) => {
     })
 }
 export const getAllArticles = ({author,topic,sort_by,order,limit,page}) => {
-    console.log(author,topic,sort_by,order,limit,page)
     return ncNewsApi
     .get('/articles',{
         params:{
@@ -40,7 +39,6 @@ export const getAllArticles = ({author,topic,sort_by,order,limit,page}) => {
         return data
     })
     .catch((err)=>{
-        console.log(err.response.data.msg)
         return Promise.reject(err.response)
     })
 }
@@ -50,12 +48,20 @@ export const getArticleById = (articleId) => {
     .then(({data})=>{
         return data
     })
+    .catch((err)=>{
+        console.log(err.response)
+        return Promise.reject(err.response)
+    })
 }
 export const getArticleComments = (articleId) => {
     return ncNewsApi
     .get(`/articles/${articleId}/comments`)
     .then(({data})=>{
         return data.comments
+    })
+    .catch((err)=>{
+        console.log(err.response)
+        return Promise.reject(err.response)
     })
 }
 export const patchArticle = (article_id, newVote) => {
@@ -65,6 +71,9 @@ export const patchArticle = (article_id, newVote) => {
     })
     .then(({data})=>{
         return data
+    })
+    .catch((err)=>{
+        return Promise.reject(err.response)
     })
 }
 export const PostComment = (newComment,article_id,username) => {

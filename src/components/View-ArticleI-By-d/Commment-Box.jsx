@@ -1,44 +1,24 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/post-id.css'
+import '../../styles/article-by-id.css';
 import { Comments } from './Comments';
 import { CommentAdder } from './CommentAdder';
 
-export const CommentsBox = ({articleComments,setArticleComments,article}) => {
-    const [isViewAllComments,setIsViewAllComments]=useState(false)
-    const [showCommentFrom,setShowCommentForm] = useState(false)
-    
-    const handleViewAllComments = () => {
-        setIsViewAllComments(!isViewAllComments)
-    }
-
-    const toggleCommentForm = () => {
-        setShowCommentForm(!showCommentFrom)
-    }
-
+export const CommentsBox = ({ articleComments, setArticleComments, article }) => {
     return (
-        <>
-            <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button onClick={handleViewAllComments}>
-                        {isViewAllComments ? 'Hide comments' : 'View comments'}
-                    </button>
-                    <span style={{ cursor: 'pointer', color: 'grey', }} >
-                        <FontAwesomeIcon className='addCommentIcone' onClick={toggleCommentForm} icon={faSquarePlus} style={{ marginRight: '5px' }} />
-                    </span>
-                </div>
-                {showCommentFrom ? <CommentAdder setArticleComments={setArticleComments} article_id={article.article_id} setIsViewAllComments={setIsViewAllComments}/> : null}
-                {isViewAllComments 
-                    && (
-                    <Comments className='remove-pointer' 
-                        articleComments={articleComments} 
-                        setArticleComments={setArticleComments} 
-                        article={article}
-                    />
-                )}
+        <div className="comments-section">
+            <div className="comments-list">
+                <Comments 
+                    articleComments={articleComments} 
+                    setArticleComments={setArticleComments} 
+                    article={article} 
+                />
             </div>
-        </>
-    )
-}
+            <div className="comment-adder-section">
+                <CommentAdder 
+                    setArticleComments={setArticleComments} 
+                    article_id={article.article_id} 
+                />
+            </div>
+        </div>
+    );
+};
