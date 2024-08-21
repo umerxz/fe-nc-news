@@ -40,7 +40,7 @@ export const Comments = ({ articleComments, setArticleComments, article }) => {
 
     const handleSaveEdit = (commentId) => {
         setLoading(true);
-        updateComment(commentId, {body:editContent})
+        updateComment(commentId, { body: editContent })
             .then(() => {
                 setArticleComments(articleComments =>
                     articleComments.map(comment =>
@@ -63,7 +63,7 @@ export const Comments = ({ articleComments, setArticleComments, article }) => {
 
     const handleVote = (commentId, newVote) => {
         setLoading(true);
-        updateComment(commentId, {newVote})
+        updateComment(commentId, { newVote })
             .then(() => {
                 setArticleComments(articleComments =>
                     articleComments.map(comment =>
@@ -112,13 +112,16 @@ export const Comments = ({ articleComments, setArticleComments, article }) => {
                                     </CardContent>
                                     <CardContent>
                                         {editMode === comment.comment_id ? (
-                                            <div>
+                                            <div className="edit-comment-container">
                                                 <textarea
+                                                    className="edit-comment-textarea"
                                                     value={editContent}
                                                     onChange={(e) => setEditContent(e.target.value)}
                                                 />
-                                                <button onClick={() => handleSaveEdit(comment.comment_id)}>Save</button>
-                                                <button onClick={handleCancelEdit}>Cancel</button>
+                                                <div className="edit-comment-buttons">
+                                                    <button className="save-edit-button" onClick={() => handleSaveEdit(comment.comment_id)}>Edit</button>
+                                                    <button className="cancel-edit-button" onClick={handleCancelEdit}>Cancel</button>
+                                                </div>
                                             </div>
                                         ) : (
                                             <Typography style={{ textAlign: 'left', marginBottom: 0, paddingBottom: 0 }} variant="body2">
