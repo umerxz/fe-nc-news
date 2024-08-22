@@ -21,7 +21,6 @@ export const Navbar = ({ setParams, topics, limit, page, resetFilters, setResetF
             setResetFilters(false);
         }
     }, [resetFilters]);
-    
 
     React.useEffect(() => {
         const savedParams = JSON.parse(localStorage.getItem('appliedParams')) || {
@@ -72,8 +71,7 @@ export const Navbar = ({ setParams, topics, limit, page, resetFilters, setResetF
 
     return (
         <div className="navbar">
-            <>
-                <h3>View All Articles</h3>
+            <div className="input-row">
                 <div className="filter-section">
                     <h4>Filter By</h4>
                     {topics.map((topic) => (
@@ -121,8 +119,8 @@ export const Navbar = ({ setParams, topics, limit, page, resetFilters, setResetF
                         </div>
                     ))}
                 </div>
-                <button className="apply-button" onClick={handleApply}>Apply</button>
-            </>
+            </div>
+            <button className="apply-button" onClick={handleApply}>Apply</button>
         </div>
     );
 };

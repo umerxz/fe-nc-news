@@ -145,24 +145,7 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
     const startArticle = (page - 1) * limit + 1;
     const endArticle = Math.min(page * limit, totalCount);
 
-    const handleLogoClick = () => {
-        const defaultParams = {
-            topic: '',
-            sort_by: 'created_at',
-            order: 'desc',
-            limit: 10,
-            page: 1
-        };
-    
-        setParams(defaultParams);
-        setPage(1);
-        setLimit(10);
-        setResetFilters(true);
-    
-        navigate('/articles?topic=&sort_by=created_at&order=desc&limit=10&page=1', { replace: true });
-    
-        fetchArticles(defaultParams);
-    };
+   
 
     if (!user) {
         return <h1 style={{ fontSize: '2rem' }}>Please <Link to='/login' style={{ fontSize: '2rem', textDecoration: 'underline' }}>Login</Link> to gain access to NC News</h1>;
@@ -170,7 +153,7 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
 
     return (
         <div className="all-articles-container">
-            <Header onLogoClick={handleLogoClick} />
+            {/* <Header onLogoClick={handleLogoClick} /> */}
             {errorMsg ? (
                 <div className="error-display">
                     <h2>Error {errorMsg.status}: {errorMsg.msg}</h2>
