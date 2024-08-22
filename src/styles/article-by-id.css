@@ -277,3 +277,44 @@
 .cancel-edit-button:hover {
     background-color: #c82333;
 }
+.article-card {
+    position: relative;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.article-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-icon {
+    color: #ff2e2e;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.delete-icon:hover {
+    color: #ff4c4c;
+    transform: scale(1.1);
+}
+
+.vote-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vote-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.vote-icon:hover {
+    transform: scale(1.1);
+}
+
+.vote-count {
+    font-size: 1.2rem;
+    margin: 0 10px;
+}

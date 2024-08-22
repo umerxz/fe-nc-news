@@ -2,14 +2,16 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardMedia, Typography, Box, IconButton } from '@mui/material';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faHeartCrack } from '@fortawesome/free-solid-svg-icons';
-import { patchArticle } from "../../api/api";
+import { faHeart, faHeartCrack, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { patchArticle, deleteArticle } from "../../api/api";
 import { LoadingSpinner } from "../LoadingSpinner";
+import { useNavigate } from 'react-router-dom';
 import '../../styles/article-by-id.css';
 
 export const ArticleBox = ({ article }) => {
     const [loading, setLoading] = useState(false);
     const [vote, setVote] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (article) {
@@ -32,6 +34,19 @@ export const ArticleBox = ({ article }) => {
             });
     };
 
+    const handleDeleteArticle = (article_id) => {
+        setLoading(true);
+        deleteArticle(article_id)
+            .then(() => {
+                setLoading(false);
+                navigate('/articles'); // Redirect to the articles list after deletion
+            })
+            .catch(() => {
+                setLoading(false);
+                // Optionally handle error if the article deletion fails
+            });
+    };
+
     return (
         <Card className="article-card">
             {loading ? (
@@ -41,14 +56,18 @@ export const ArticleBox = ({ article }) => {
                     <CardMedia
                         component="img"
                         alt={`Image for ${article.title}`}
-                        // height="250"
                         image={article.article_img_url}
                         className="articleImage"
                     />
                     <CardContent className="article-details">
-                        <Typography variant="h5" component="div" className="articleTitle">
-                            {article.title} 
-                        </Typography>
+                        <Box className="article-header">
+                            <Typography variant="h5" component="div" className="articleTitle">
+                                {article.title}
+                            </Typography>
+                            <IconButton onClick={() => handleDeleteArticle(article.article_id)} className="delete-icon">
+                                <FontAwesomeIcon icon={faTrashAlt} style={{ color: '#ff2e2e' }} />
+                            </IconButton>
+                        </Box>
                         <Typography variant="subtitle1" color="text.secondary" className="articleSubtitle">
                             By: {article.author}
                         </Typography>

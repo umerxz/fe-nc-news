@@ -152,3 +152,10 @@ export const deleteUser = (username) => {
         return;
     })
 }
+export const deleteArticle = (articleId) => {
+    return ncNewsApi
+    .delete(`/articles/${articleId}`)
+    .then(()=>{
+        return;
+    })
+}

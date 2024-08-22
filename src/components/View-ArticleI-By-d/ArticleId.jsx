@@ -25,7 +25,7 @@ export const ArticleId = () => {
                 setLoading(false);
             })
             .catch((err) => {
-                setErrorMsg({ msg: err.response.data.msg, status: err.response.status });
+                setErrorMsg({ msg: err.data.msg, status: err.status });
                 setLoading(false);
             });
         setLoading(true);
@@ -35,7 +35,7 @@ export const ArticleId = () => {
                 setArticleComments(comments);
             })
             .catch((err) => {
-                setErrorMsg({ msg: err.response.data.msg, status: err.response.status });
+                setErrorMsg({ msg: err.data.msg, status: err.status });
                 setLoading(false);
             });
     }, [article_id]);
