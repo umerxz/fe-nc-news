@@ -39,11 +39,10 @@ export const ArticleBox = ({ article }) => {
         deleteArticle(article_id)
             .then(() => {
                 setLoading(false);
-                navigate('/articles'); // Redirect to the articles list after deletion
+                navigate('/articles'); 
             })
             .catch(() => {
                 setLoading(false);
-                // Optionally handle error if the article deletion fails
             });
     };
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState, useEffect } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { UserContext } from '../../context/UserProvider';
 import { getAllArticles, getTopics, createArticle, createTopic } from '../../api/api';
 import { ArticlesCards } from './ArticlesCards';
@@ -10,14 +10,12 @@ import Pagination from './Pagination';
 import ArticlesPerPage from './ArticlesPerPage';
 import Modal from 'react-modal';
 import '../../styles/all-articles.css';
-import { Header } from '../Header';
 import '../../styles/header.css';
 
 Modal.setAppElement('#root');
 
 export const ArticlesPage = ({ author, customTitle, customMessage }) => {
     const { user } = useContext(UserContext);
-    const navigate = useNavigate();
     const [articlesList, setArticlesList] = useState([]);
     const [errorMsg, setErrorMsg] = useState(null);
     const [loading, setLoading] = useState(true); 
@@ -153,7 +151,6 @@ export const ArticlesPage = ({ author, customTitle, customMessage }) => {
 
     return (
         <div className="all-articles-container">
-            {/* <Header onLogoClick={handleLogoClick} /> */}
             {errorMsg ? (
                 <div className="error-display">
                     <h2>Error {errorMsg.status}: {errorMsg.msg}</h2>
